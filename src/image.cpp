@@ -72,6 +72,4 @@ namespace possum {
     Image::Type Image::getType() const {
         return type;
     }
-
-
 }
