@@ -7,7 +7,9 @@
 #include <QMainWindow>
 #include <QProgressDialog>
 #include <QFileDialog>
-    QT_BEGIN_NAMESPACE
+#include <QGraphicsScene>
+
+QT_BEGIN_NAMESPACE
     namespace Ui { class MainWindow; }
     QT_END_NAMESPACE
 
@@ -22,8 +24,10 @@
     private:
         Ui::MainWindow *ui;
         possum::ImagesListModel images_model;
+        QGraphicsScene picture_scene;
 
     public slots:
         void load_folder();
+        void display_image(const QModelIndex &);
     };
 #endif // MAINWINDOW_H

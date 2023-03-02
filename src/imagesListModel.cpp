@@ -6,7 +6,6 @@
 
 #include <utility>
 namespace possum{
-    ImagesListModel::ImagesListModel(std::vector<Image> images, QObject *parent) : QAbstractListModel(parent), images(std::move(images)){}
 
     QVariant ImagesListModel::data(const QModelIndex &index, int role) const {
         if (!index.isValid())
@@ -32,8 +31,8 @@ namespace possum{
     ImagesListModel::ImagesListModel(QObject *parent) : QAbstractListModel(parent), images(std::vector<Image>()) {
     }
 
-    void ImagesListModel::setImages(const std::vector<Image> &images) {
-        this->images = images;
+    void ImagesListModel::setImages(const std::vector<Image>& images_vec) {
+        this->images = images_vec;
         emit dataChanged(createIndex(0,0), createIndex(images.size()-1, 0));
     }
 

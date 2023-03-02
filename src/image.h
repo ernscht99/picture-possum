@@ -12,6 +12,7 @@
 #include <regex>
 #include <openssl/sha.h>
 #include <set>
+#include <QMetaType>
 
 namespace possum {
     ///Type for describing images in the filesystem
@@ -51,7 +52,6 @@ namespace possum {
         ///Parse the extension of a file to a Image::Type
         static Image::Type parse_extension(const std::string & file_path);
     };
-
 }
 
 #endif //PICTURE_POSSUM_IMAGE_H
