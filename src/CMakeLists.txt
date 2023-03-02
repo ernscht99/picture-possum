@@ -8,7 +8,7 @@ set(POSSUM_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        session.cpp session.h image.cpp image.h)
+        session.cpp session.h image.cpp image.h imagesListModel.cpp imagesListModel.h)
 add_library(possum_core ${POSSUM_SOURCES})
 
 SET(CMAKE_BUILD_TYPE Debug)

@@ -35,7 +35,7 @@ namespace possum {
         Image(std::string path, const std::vector<unsigned char> &sha1Sum, Image::Type type);
 
         ///Return a vector of Image objects corresponding to the contents of the directory at directory_path.
-        ///Only includes images with valid extensions as specified in valid_types
+        ///Only includes images with valid extensions as specified in valid_types TODO make asynchronous
         static std::vector<Image> get_images(const std::string& directory_path, const std::set<Image::Type> &valid_types);
 
     private:

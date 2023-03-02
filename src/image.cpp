@@ -43,7 +43,6 @@ namespace possum {
     Image::Type Image::parse_extension(const string &file_path) {
         regex r("\\.(?:(jpe?g)|(png)|(bmp)|([A-Za-z]+))$", std::regex::icase);
         smatch match{};
-        size_t index;
         if (!regex_search(file_path, match, r)) {
             return Image::Type::None;
         }
