@@ -7,10 +7,14 @@
 #include <QAbstractItemModel>
 #include "image.h"
 namespace possum {
+    class lol {
+        int x;
+    };
     class ImagesListModel : public QAbstractListModel {
     Q_OBJECT
 
         std::vector<Image> images;
+        std::map<std::string, Image &> map;
     public:
         explicit ImagesListModel(QObject *parent = nullptr);
         explicit ImagesListModel(std::vector<Image> images, QObject *parent = nullptr);
@@ -22,5 +26,6 @@ namespace possum {
         void setImages(const std::vector<Image> &images);
     };
 }
+Q_DECLARE_METATYPE(possum::lol);
 
 #endif //PICTURE_POSSUM_IMAGESLISTMODEL_H

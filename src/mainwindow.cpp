@@ -8,7 +8,8 @@
         ui->graphicsView->setScene(&picture_scene);
         connect(ui->actionOpen_Folder, SIGNAL(triggered(bool)), this, SLOT(load_folder()));
         connect(ui->listView->selectionModel(),
-                SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(display_image(const QModelIndex &)));
+                SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this,
+                SLOT(display_image(const QModelIndex &)));
     }
 
     MainWindow::~MainWindow() {
@@ -23,8 +24,11 @@ void MainWindow::load_folder() {
 }
 
 void MainWindow::display_image(const QModelIndex & index){
+        picture_scene.clear();
         auto data = images_model.data(index, 0);
         ui->label_file_name->setText(data.toString());
         QPixmap image_data(data.toString());
-        picture_scene.setBackgroundBrush(image_data);
+        image_data = image_data.scaled(ui->graphicsView->size() * 0.95, Qt::KeepAspectRatio);
+        //picture_scene.setBackgroundBrush(image_data);
+        picture_scene.addPixmap(image_data);
 }
