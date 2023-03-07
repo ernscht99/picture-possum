@@ -13,44 +13,48 @@
 #include <openssl/sha.h>
 #include <set>
 #include <QMetaType>
-
+#include <utility>
+#include <string>
+#include <chrono>
+#include <iomanip>
+#include "ImageTypes.h"
 namespace possum {
     ///Type for describing images in the filesystem
     class Image {
     public:
-        ///File Types corresponding to file extensions, limited to supported types
-        enum Type{
-            JPEG, PNG, BMP, Other, None
-        };
 
         ///Getter for path
-        [[nodiscard]] const std::string &getPath() const;
+        [[nodiscard]] const std::filesystem::path &getPath() const;
 
         ///Getter for sha1sum
-        [[nodiscard]] const std::vector<unsigned char> &getSha1Sum() const;
+        [[nodiscard]] const std::string &getSha1Sum() const;
+
+        [[nodiscard]] std::string getFilename() const;
+
+        void add_path(const std::filesystem::path&);
 
         ///getter for type
-        [[nodiscard]] Type getType() const;
+        [[nodiscard]] ImageType getType() const;
 
         ///Constructing Image data structure. sha1sum needs to be calculated beforehand.
-        Image(std::string path, const std::vector<unsigned char> &sha1Sum, Image::Type type);
+        Image(const std::string& path, std::string sha1Sum, ImageType type, time_t creation_time);
 
-        ///Return a vector of Image objects corresponding to the contents of the directory at directory_path.
-        ///Only includes images with valid extensions as specified in valid_types TODO make asynchronous
-        static std::vector<Image> get_images(const std::string& directory_path, const std::set<Image::Type> &valid_types);
+        void setCreationTime(time_t creationTime);
+
+        [[nodiscard]] time_t getCreationTime() const;
 
     private:
         ///path of the image in the file system
-        std::string path;
+        std::vector<std::filesystem::path> pathes;
 
         ///sha1 hash of the image contents
-        std::vector<unsigned char> sha1_sum;
+        std::string sha1_sum;
 
         ///Image type
-        Image::Type type;
+        ImageType type;
 
-        ///Parse the extension of a file to a Image::Type
-        static Image::Type parse_extension(const std::string & file_path);
+        time_t creation_time;
+
     };
 }
 

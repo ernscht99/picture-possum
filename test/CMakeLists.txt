@@ -1,7 +1,7 @@
 set(TEST_SOURCES
         # add your source files here
         FindFilesTest.cpp
-        Tester.cpp)
+        Tester.cpp TestExif.cpp)
 #enable_testing()
 find_package(GTest REQUIRED)
 

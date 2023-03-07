@@ -4,6 +4,7 @@
 #include <iostream>
 #include "session.h"
 #include "imagesListModel.h"
+#include "ImageTypes.h"
 #include <QMainWindow>
 #include <QProgressDialog>
 #include <QFileDialog>
@@ -23,6 +24,7 @@ QT_BEGIN_NAMESPACE
 
     private:
         Ui::MainWindow *ui;
+        possum::Settings settings;
         possum::ImagesListModel images_model;
         QGraphicsScene picture_scene;
 
