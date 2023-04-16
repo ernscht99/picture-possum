@@ -24,4 +24,5 @@ namespace possum {
                 return Other;
         }
     }
+
 }

@@ -7,6 +7,7 @@
 
 #include <string>
 #include <regex>
+#include <QString>
 ///File Types corresponding to file extensions, limited to supported types
 namespace possum {
     enum ImageType {

@@ -7,21 +7,25 @@
 
 
 #include <string>
+#include <QKeySequence>
+#include <QJsonObject>
 
-class Color {
-public:
-    Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 0xff);
-
-private:
-    unsigned char r,g,b,a;
-};
+static const QString TAG_EMOJI_KEY = "tag_emoji";
+static const QString TAG_NAME_KEY = "tag_name";
+static const QString TAG_IDENTIFIER_KEY = "tag_identifier";
+static const QString TAG_KEYSEQUENCE_KEY = "tag_key_sequence";
 class Tag {
-public:
+private:
     std::string identifier;
+public:
     std::string emoji;
     std::string name;
-    Color color;
-    Tag(std::string identifier, std::string emoji, std::string name, const Color &color);
+    QKeySequence key_sequence;
+    Tag(std::string identifier, std::string emoji, std::string name, const QKeySequence& key_sequence);
+    [[nodiscard]] QJsonObject to_json() const;
+    static Tag from_json(const QJsonObject &);
+
+    [[nodiscard]] const std::string &getIdentifier() const;
 };
 
 

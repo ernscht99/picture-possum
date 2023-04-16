@@ -6,7 +6,26 @@ set(POSSUM_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        session.cpp session.h image.cpp image.h imagesListModel.cpp imagesListModel.h TinyEXIF.cpp TinyEXIF.h Settings.cpp Settings.h Tag.cpp Tag.h ImageTypes.h ImageTypes.cpp)
+        session.cpp
+        session.h
+        image.cpp
+        image.h
+        imagesListModel.cpp
+        imagesListModel.h
+        TinyEXIF.cpp
+        TinyEXIF.h
+        Settings.cpp
+        Settings.h
+        Tag.cpp
+        Tag.h
+        ImageTypes.h
+        ImageTypes.cpp
+        settingswidget.cpp
+        TagListModel.cpp
+        TagListModel.h
+        tagdialog.cpp
+        tagdialog.h
+        )
 add_library(possum_core ${POSSUM_SOURCES})
 
 SET(CMAKE_BUILD_TYPE Debug)

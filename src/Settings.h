@@ -10,17 +10,35 @@
 #include "Tag.h"
 #include "ImageTypes.h"
 #include <set>
+#include <QString>
+#include <QList>
+#include <QJsonObject>
+#include <utility>
+#include <QJsonArray>
+#include <QJsonValue>
+
 namespace possum {
-    class Settings {
+    static const QString DATE_FORMATS_KEY = "dates";
+    static const QString VALID_TYPES_KEY = "valid_types";
+    static const QString TAGS_ARRAY_KEY = "tags";
+
+    class Settings{
     public:
+
         std::map<std::string, Tag> tags;
         std::set<possum::ImageType> valid_types;
-        std::vector<std::string> date_conversion_formats;
+        QStringList date_conversion_formats;
+        [[nodiscard]] std::string render_tag_symbol(const std::string & tag_id) const;
+        [[nodiscard]] std::string render_tag_full(const std::string & tag_id) const;
+        [[nodiscard]] QJsonObject to_json() const;
+        static Settings from_json(const QJsonObject&);
 
-    Settings(
+
+        Settings(
             const std::vector<Tag> &tag_vector,
             const std::set<possum::ImageType> &validTypes,
-            const std::vector<std::string> &dateConversionFormats);
+            QStringList dateConversionFormats);
+
     };
 }
 
