@@ -54,7 +54,7 @@ namespace possum {
         return tag_ids;
     }
 
-    Image::Image() : pathes({""}), type(ImageType::None), creation_time(0) {
+    Image::Image() : pathes({""}), sha1_sum(""), type(ImageType::None), creation_time(0) {
     }
 
     bool Image::is_empty() const {

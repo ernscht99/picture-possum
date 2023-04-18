@@ -37,12 +37,16 @@ namespace possum {
         ///Getter for sha1sum
         [[nodiscard]] const std::string &getSha1Sum() const;
 
+        ///Get the first filename
         [[nodiscard]] std::string getFilename() const;
 
+        ///Add a path to that image on disk
         void add_path(const std::filesystem::path&);
 
+        ///Add a tag to this image
         void add_tag(const Tag& tag);
 
+        ///Delete all associated tags
         void clear_tags();
 
         ///getter for type
@@ -51,18 +55,24 @@ namespace possum {
         ///Constructing Image data structure. sha1sum needs to be calculated beforehand.
         Image(const std::string& path, std::string sha1Sum, ImageType type, time_t creation_time);
 
+        ///Construct a dummy image, for display when program is first opened
         Image();
 
+        ///set the creation time
         void setCreationTime(time_t creationTime);
 
+        ///get the creation time
         [[nodiscard]] time_t getCreationTime() const;
 
+        ///Convert this Image object into its JSON representation
         [[nodiscard]] QJsonObject to_json() const;
+
+        ///Parse Image object from a JSON representation
         static Image from_json(const QJsonObject&);
 
+        ///Return the identifiers of all associated tags
         [[nodiscard]] const std::set<std::string> &getTagIds() const;
 
-        [[nodiscard]] bool is_empty() const;
     private:
         ///path of the image in the file system
         std::vector<std::filesystem::path> pathes;
@@ -73,11 +83,13 @@ namespace possum {
         ///associated tags
         std::set<std::string> tag_ids;
 
-        ///Image type
+        ///Image file type
         ImageType type;
 
+        ///Estimated creation time
         time_t creation_time;
 
+        ///Constructor for copying an Image, used when parsing from json
         Image(const std::vector<std::string>& pathes, std::string  sha1Sum, ImageType type, time_t creation_time, const std::set<std::string>& tag_ids);
 
     };

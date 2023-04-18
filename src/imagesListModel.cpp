@@ -121,7 +121,10 @@ namespace possum{
     }
 
     Image ImagesListModel::get_image(const string &hash) {
-        return *image_map.find(hash)->second;
+        auto to_get = image_map.find(hash);
+        if (to_get == image_map.end())
+            return Image{};
+        return *to_get->second;
     }
 
 
@@ -181,7 +184,11 @@ namespace possum{
     }
 
     void ImagesListModel::update_image(const Image &updater) {
-        *image_map.find(updater.getSha1Sum())->second = updater;
+        auto to_be_updated = image_map.find(updater.getSha1Sum());
+        if(to_be_updated == image_map.end())
+            return;
+
+        *to_be_updated->second = updater;
         layoutChanged();
     }
 
