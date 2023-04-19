@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <iostream>
-#include "session.h"
 #include "imagesListModel.h"
 #include "ImageTypes.h"
 #include <QMainWindow>

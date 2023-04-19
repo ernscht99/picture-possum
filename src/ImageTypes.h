@@ -14,6 +14,7 @@ namespace possum {
         JPEG, PNG, BMP, Other, None
     };
 
+    ///Associate the enum parsed from a file name
     ImageType parse_extension(const std::string& file_path);
 }
 #endif //PICTURE_POSSUM_IMAGETYPES_H

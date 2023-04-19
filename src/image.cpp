@@ -57,10 +57,6 @@ namespace possum {
     Image::Image() : pathes({""}), sha1_sum(""), type(ImageType::None), creation_time(0) {
     }
 
-    bool Image::is_empty() const {
-        return type == ImageType::None;
-    }
-
     QJsonObject Image::to_json() const {
         QJsonObject root{};
         QJsonArray pathes_arr{};

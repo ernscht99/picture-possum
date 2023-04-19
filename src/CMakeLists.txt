@@ -6,8 +6,6 @@ set(POSSUM_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        session.cpp
-        session.h
         image.cpp
         image.h
         imagesListModel.cpp
