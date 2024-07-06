@@ -3,6 +3,7 @@
 //
 
 #include <QMessageBox>
+#include <QProgressDialog>
 #include "imagesListModel.h"
 
 namespace {
@@ -51,6 +52,12 @@ namespace possum{
     using namespace std::filesystem;
 
     void ImagesListModel::load_images(const std::string &directory_path) {
+        QProgressDialog progress{};
+        progress.setCancelButton(nullptr);
+        progress.setLabelText("Detecting Duplicates");
+        progress.setWindowModality(Qt::WindowModal);
+        progress.setMaximum(static_cast<int>(std::distance(directory_iterator(directory_path), directory_iterator{})));
+        int count = 0;
         for (const auto &dir_entry : directory_iterator(directory_path)){
             ImageType file_type{parse_extension(dir_entry.path())};
 
@@ -66,6 +73,7 @@ namespace possum{
                 time_t estimated_date = estimate_date(file_stream, dir_entry.path().filename().string());
                 insert_image({dir_entry.path(), get_sha1(buffer, file_size), file_type, estimated_date});
             }
+            progress.setValue(count++);
         }
         emit layoutChanged();
     }
