@@ -66,4 +66,12 @@ possum::Settings possum::Settings::from_json(const QJsonObject & json) {
     };
 }
 
+std::string possum::Settings::render_tag_name(const std::string &tag_id) const {
+    auto tag_iterator = tags.find(tag_id);
+    if(tag_iterator  != tags.end()) {
+        return tag_iterator->second.name;
+    }
+    return "";
+}
+
 

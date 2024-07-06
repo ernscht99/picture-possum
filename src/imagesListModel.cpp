@@ -2,6 +2,7 @@
 // Created by felix on 3/2/23.
 //
 
+#include <QMessageBox>
 #include "imagesListModel.h"
 
 namespace {
@@ -21,6 +22,27 @@ namespace {
         ::localtime_r(&timestamp, &time);
         ::strftime(time_string_buffer, 64,"%Y-%m-%d", &time);
         return QString{time_string_buffer};
+    }
+    std::filesystem::path get_subdir_path(const std::filesystem::path& parent,const std::string_view & subdir) {
+        std::filesystem::path subdir_path{parent};
+        subdir_path.append(subdir);
+        return subdir_path;
+    }
+
+    std::filesystem::path get_subdir_path(const std::filesystem::path& parent, const std::string& subdir) {
+        return get_subdir_path(parent, std::string_view{subdir});
+    }
+
+    void create_subdir_if_not_exist(const std::filesystem::path& path) {
+        if(std::filesystem::exists(path) && std::filesystem::is_directory(path))
+            return;
+        std::filesystem::create_directory(path);
+    }
+
+    void symlink(const std::filesystem::path& path_dir, const std::filesystem::path& path_file) {
+        std::filesystem::path path_dir_copy{path_dir};
+        path_dir_copy.append(path_file.filename().c_str());
+        std::filesystem::create_symlink(path_file, path_dir_copy);
     }
 }
 
@@ -258,6 +280,110 @@ namespace possum{
 
     bool ImagesListModel::has_unsaved_changes() const {
         return unsaved_changes;
+    }
+
+    void ImagesListModel::generate_sorted_dir(const std::filesystem::path &path) {
+        std::filesystem::path sorted_path = path;
+        sorted_path.append("sorted");
+        if(exists(sorted_path)) {
+            QMessageBox msgBox;
+            msgBox.setText("Directory 'sorted' already exists.");
+            msgBox.setInformativeText("Do you want to override its contents?");
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::No);
+            int ret = msgBox.exec();
+            switch (ret) {
+                case QMessageBox::No:
+                    return;
+                case QMessageBox::Yes:
+                    std::filesystem::remove_all(sorted_path);
+                    break;
+                default:
+                    return;
+            }
+            //ask if override
+        }
+        //Level 0
+        std::filesystem::create_directory(sorted_path);
+
+        //Level 1
+        std::filesystem::path by_tag_path{sorted_path};
+        by_tag_path.append("by_tag");
+        std::filesystem::create_directory(by_tag_path);
+
+        std::filesystem::path by_date_path{sorted_path};
+        by_date_path.append("by_date");
+        std::filesystem::create_directory(by_date_path);
+
+        //Level 2
+        std::filesystem::path no_tag_path{by_tag_path};
+        no_tag_path.append("untagged");
+        std::filesystem::create_directory(no_tag_path);
+
+        std::filesystem::path no_date_path{by_date_path};
+        no_date_path.append("undated");
+        std::filesystem::create_directory(no_date_path);
+
+        std::filesystem::path by_year_path{by_date_path};
+        by_year_path.append("by_year");
+        std::filesystem::create_directory(by_year_path);
+
+        std::filesystem::path by_month_path{by_date_path};
+        by_month_path.append("by_month");
+        std::filesystem::create_directory(by_month_path);
+
+        std::filesystem::path by_day_path{by_date_path};
+        by_day_path.append("by_day");
+        std::filesystem::create_directory(by_day_path);
+
+        //generate symlinks
+        for( auto it = image_map.begin(); it != image_map.end(); ++it) {
+            auto& image = it->second;
+            auto& image_path = image->getPath();
+
+            //tags
+            auto& tag_ids = image->getTagIds();
+            if(tag_ids.empty()) {
+                symlink(no_tag_path, image_path);
+            } else {
+                for(const auto& tag_id : tag_ids) {
+                    auto tag_path = get_subdir_path(by_tag_path, settings.render_tag_name(tag_id));
+                    create_subdir_if_not_exist(tag_path);
+                    symlink(tag_path, image_path);
+                }
+            }
+
+            //dates
+            if(image->getCreationTime() == 0) {
+                symlink(no_date_path,image_path);
+            } else {
+                std::string date_string = from_timestamp(image->getCreationTime()).toStdString();
+                std::string_view year = std::string_view(date_string).substr(0, 4);
+                std::string_view month = std::string_view(date_string).substr(5, 7);
+                std::string_view day = std::string_view(date_string).substr(8, 10);
+
+                //year
+                auto year_path = get_subdir_path(by_year_path, year);
+                create_subdir_if_not_exist(year_path);
+                symlink(year_path, image_path);
+
+                //month
+                auto month_year_path = get_subdir_path(by_month_path, year);
+                create_subdir_if_not_exist(month_year_path);
+                auto month_path = get_subdir_path(month_year_path, month);
+                create_subdir_if_not_exist(month_path);
+                symlink(month_path, image_path);
+
+                //day
+                auto day_year_path = get_subdir_path(by_day_path, year);
+                create_subdir_if_not_exist(day_year_path);
+                auto day_month_path = get_subdir_path(day_year_path, month);
+                create_subdir_if_not_exist(day_month_path);
+                auto day_path = get_subdir_path(day_month_path, day);
+                create_subdir_if_not_exist(day_path);
+                symlink(day_path, image_path);
+            }
+        }
     }
 
 }

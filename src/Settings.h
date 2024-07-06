@@ -38,6 +38,9 @@ namespace possum {
         ///Return the symbol of the tag associated with the tag_id
         [[nodiscard]] std::string render_tag_symbol(const std::string & tag_id) const;
 
+        ///Return name of the tag associated with the tag_id
+        [[nodiscard]] std::string render_tag_name(const std::string & tag_id) const;
+
         ///Return concatination of symbol and name jAof the tag associated with the tag_id
         [[nodiscard]] std::string render_tag_full(const std::string & tag_id) const;
 

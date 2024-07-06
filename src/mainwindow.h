@@ -55,7 +55,7 @@ QT_BEGIN_NAMESPACE
 
     public slots:
         ///Open a dialog to open a directory that contains images
-        void load_folder();
+        void load_dir();
 
         ///Load an image from the image container to be displayed
         void display_image(const QModelIndex &);
@@ -68,6 +68,8 @@ QT_BEGIN_NAMESPACE
 
         ///Save a session file
         void save_file();
+
+        void generate_sorted_dir();
 
         ///Update the new_settings.
         void setSettings(const possum::Settings &new_settings);

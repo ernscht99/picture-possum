@@ -36,10 +36,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(&picture_scene);
 
     ///Connect Signals
-    connect(ui->actionOpen_Folder, SIGNAL(triggered(bool)), this, SLOT(load_folder()));
+    connect(ui->actionOpen_Folder, SIGNAL(triggered(bool)), this, SLOT(load_dir()));
     connect(ui->actionOpen_Settings, SIGNAL(triggered(bool)), this, SLOT(open_settings()));
     connect(ui->actionOpen_Session_File, SIGNAL(triggered(bool)), this, SLOT(load_file()));
     connect(ui->actionSave_Session_File, SIGNAL(triggered(bool)), this, SLOT(save_file()));
+    connect(ui->actionGenerate_Sorted_Directory, SIGNAL(triggered(bool)), this, SLOT(generate_sorted_dir()));
 
     ///Display Image when it's selected
     connect(ui->tableView->selectionModel(),
@@ -51,7 +52,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::load_folder() {
+void MainWindow::load_dir() {
     ask_about_unsaved();
     QString path = QFileDialog::getExistingDirectory(this, tr("Open Image Directory"),
                                                      "/home/felix/Projects/picture_possum/test/test_dirs");
@@ -112,8 +113,10 @@ void MainWindow::setSettings(const Settings &new_settings) {
 void MainWindow::paint_image() {
     picture_scene.clear();
     QPixmap image_data(current_image.getPath().c_str());
-    image_data = image_data.scaled(ui->graphicsView->size() * 0.95, Qt::KeepAspectRatio);
-    picture_scene.addPixmap(image_data);
+    if (not image_data.isNull()) {
+        image_data = image_data.scaled(ui->graphicsView->size() * 0.95, Qt::KeepAspectRatio);
+        picture_scene.addPixmap(image_data);
+    }
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
@@ -176,5 +179,13 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->accept();
     } else {
         event->ignore();
+    }
+}
+
+void MainWindow::generate_sorted_dir() {
+    QString path = QFileDialog::getExistingDirectory(this, tr("Generate Sorted Directory"),
+                                                     "/home/felix/Projects/picture_possum/test/test_dirs");
+    if (!path.isEmpty()) {
+        images_model.generate_sorted_dir(path.toStdString());
     }
 }

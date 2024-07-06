@@ -18,10 +18,10 @@
     <item>
      <widget class="QTableView" name="tableView">
       <property name="selectionMode">
-       <enum>QAbstractItemView::SingleSelection</enum>
+       <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
       </property>
       <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectRows</enum>
+       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
       </property>
       <property name="showGrid">
        <bool>false</bool>
@@ -43,14 +43,14 @@
     <item>
      <widget class="QFrame" name="frame">
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::Shape::StyledPanel</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
+       <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="sizeConstraint">
-        <enum>QLayout::SetDefaultConstraint</enum>
+        <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
        </property>
        <item>
         <widget class="QGraphicsView" name="graphicsView"/>
@@ -58,10 +58,10 @@
        <item>
         <layout class="QFormLayout" name="formLayout">
          <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
+          <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
          </property>
          <property name="fieldGrowthPolicy">
-          <enum>QFormLayout::ExpandingFieldsGrow</enum>
+          <enum>QFormLayout::FieldGrowthPolicy::ExpandingFieldsGrow</enum>
          </property>
          <item row="0" column="0">
           <widget class="QLabel" name="label">
@@ -144,6 +144,8 @@
     <addaction name="separator"/>
     <addaction name="actionOpen_Session_File"/>
     <addaction name="actionSave_Session_File"/>
+    <addaction name="separator"/>
+    <addaction name="actionGenerate_Sorted_Directory"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -157,7 +159,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen_Folder">
    <property name="text">
-    <string>Open Folder</string>
+    <string>Open Directory</string>
    </property>
   </action>
   <action name="actionSave_Tags">
@@ -178,6 +180,11 @@
   <action name="actionSave_Session_File">
    <property name="text">
     <string>Save Session File</string>
+   </property>
+  </action>
+  <action name="actionGenerate_Sorted_Directory">
+   <property name="text">
+    <string>Generate Sorted Directory</string>
    </property>
   </action>
  </widget>
