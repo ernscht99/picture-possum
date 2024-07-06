@@ -27,7 +27,9 @@ namespace possum {
         std::vector<std::string> hash_handles;
         std::map<std::string, std::unique_ptr<Image>> image_map;
         possum::Settings settings;
+        bool unsaved_changes;
         explicit ImagesListModel(Settings settings, std::map<std::string, std::unique_ptr<Image>> images, QObject *parent = nullptr);
+
     public:
 
         ///Must be implemented because QAbstractListModel
@@ -48,6 +50,7 @@ namespace possum {
         ///Insert Image into structure
         void insert_image(const Image&);
 
+        ///Return Image that corresponds to a hash. Empty Image if there is none.
         Image get_image(const std::string& hash);
 
         void update_image(const Image& updater);
@@ -62,10 +65,13 @@ namespace possum {
 
         static ImagesListModel from_json(const QJsonObject&);
 
-        [[nodiscard]] bool save(const std::filesystem::path & path) const;
+        [[nodiscard]] bool save(const std::filesystem::path & path);
         void load(const std::filesystem::path & path);
 
-        const Settings &getSettings() const;
+        [[nodiscard]] const Settings &getSettings() const;
+
+        [[nodiscard]] bool has_unsaved_changes() const;
+
     };
 }
 

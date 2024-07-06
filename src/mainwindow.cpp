@@ -52,6 +52,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::load_folder() {
+    ask_about_unsaved();
     QString path = QFileDialog::getExistingDirectory(this, tr("Open Image Directory"),
                                                      "/home/felix/Projects/picture_possum/test/test_dirs");
     if (!path.isEmpty()) {
@@ -81,11 +82,11 @@ void MainWindow::display_image(const QModelIndex &index) {
     paint_image();
 }
 
-void MainWindow::setSettings(const Settings &settings) {
-    this->settings = settings;
-    this->images_model.setSettings(settings);
+void MainWindow::setSettings(const Settings &new_settings) {
+    this->settings = new_settings;
+    this->images_model.setSettings(new_settings);
 
-    ///Set the global shortcuts based on the tags in the settings
+    ///Set the global shortcuts based on the tags in the new_settings
     shortcuts.clear();
     auto delete_tags = [this]() {
         this->current_image.clear_tags();
@@ -99,7 +100,7 @@ void MainWindow::setSettings(const Settings &settings) {
     shortcuts.emplace_back(std::make_unique<QShortcut>(QKeySequence{"Return"},this,move_down));
     shortcuts.emplace_back(std::make_unique<QShortcut>(QKeySequence{"Space"},this,move_down));
 
-    for ( const auto & [key, value] : settings.tags) {
+    for ( const auto & [key, value] : new_settings.tags) {
         auto tag_image_with = [this, value]() {
             this->current_image.add_tag(value);
             this->images_model.update_image(current_image);
@@ -134,6 +135,7 @@ void MainWindow::save_file() {
 }
 
 void MainWindow::load_file() {
+    ask_about_unsaved();
     QString path_string = QFileDialog::getOpenFileName(this, "Load Session File", "", "*.json");
     if (path_string.isEmpty())
         return;
@@ -144,5 +146,35 @@ void MainWindow::load_file() {
         QMessageBox msgBox;
         msgBox.setText("Session could not be loaded");
         msgBox.exec();
+    }
+}
+
+bool MainWindow::ask_about_unsaved() {
+    if( this->images_model.has_unsaved_changes()) {
+        QMessageBox msgBox;
+        msgBox.setText("There are unsaved Changes");
+        msgBox.setInformativeText("Do you want to save your changes?");
+        msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Save);
+        int ret = msgBox.exec();
+        switch (ret) {
+            case QMessageBox::Save:
+                save_file();
+                //intentional fallthrough
+            case QMessageBox::Discard:
+                return true;
+            case QMessageBox::Cancel:
+            default:
+                return false;
+        }
+    }
+    return true;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    if(ask_about_unsaved()) {
+        event->accept();
+    } else {
+        event->ignore();
     }
 }

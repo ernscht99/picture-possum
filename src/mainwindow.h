@@ -45,9 +45,13 @@ QT_BEGIN_NAMESPACE
         ///display the current image in the UI container
         void paint_image();
 
+        ///Open a dialog asking if unsaved changes should be saved. Returns if user want to proceed
+        bool ask_about_unsaved();
     protected:
         ///Resize the displayed image when the size of the main window changes
         void resizeEvent(QResizeEvent *event) override;
+
+        void closeEvent(QCloseEvent *event) override;
 
     public slots:
         ///Open a dialog to open a directory that contains images
@@ -65,7 +69,8 @@ QT_BEGIN_NAMESPACE
         ///Save a session file
         void save_file();
 
-        ///Update the settings.
-        void setSettings(const possum::Settings &settings);
+        ///Update the new_settings.
+        void setSettings(const possum::Settings &new_settings);
+
     };
 #endif // MAINWINDOW_H

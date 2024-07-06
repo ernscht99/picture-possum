@@ -29,7 +29,7 @@ ui(new Ui::TagDialog)
     setWindowTitle(QString{"New Tag"});
     symbol_buttons_group.buttons()[0]->setChecked(true);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &TagDialog::save);
-    connect(this, SIGNAL(tag_changed(const Tag&)), parent, SLOT(tag_changed(const Tag &)));
+    connect(this, SIGNAL(tag_changed(const Tag&)), parent, SLOT(change_tag(const Tag &)));
 
 }
 

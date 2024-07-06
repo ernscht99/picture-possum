@@ -103,7 +103,7 @@ namespace possum{
         return 3;
     }
 
-    ImagesListModel::ImagesListModel(Settings settings, QObject *parent) : QAbstractTableModel(parent), settings(std::move(settings)) {
+    ImagesListModel::ImagesListModel(Settings settings, QObject *parent) : QAbstractTableModel(parent), settings(std::move(settings)), unsaved_changes(false) {
     }
 
 
@@ -188,6 +188,8 @@ namespace possum{
         if(to_be_updated == image_map.end())
             return;
 
+        if(*to_be_updated->second != updater)
+            unsaved_changes = true;
         *to_be_updated->second = updater;
         layoutChanged();
     }
@@ -223,18 +225,19 @@ namespace possum{
 
 
     ImagesListModel::ImagesListModel(Settings settings, std::map<std::string, std::unique_ptr<Image>> images,
-                                     QObject *parent) : image_map(std::move(images)), settings(std::move(settings)){
+                                     QObject *parent) : image_map(std::move(images)), settings(std::move(settings)), unsaved_changes(false){
         for (const auto & [key, ignore] : image_map) {
             hash_handles.emplace_back(key);
         }
     }
 
-    bool ImagesListModel::save(const path &path) const {
+    bool ImagesListModel::save(const path &path) {
         QFile file {path};
         if (!file.open(QIODevice::ReadWrite | QIODevice::Text | QIODeviceBase::Truncate))
             return false;
         file.write(QJsonDocument{this->to_json()}.toJson());
         file.close();
+        unsaved_changes = false;
         return true;
     }
 
@@ -251,6 +254,10 @@ namespace possum{
 
     const Settings &ImagesListModel::getSettings() const {
         return settings;
+    }
+
+    bool ImagesListModel::has_unsaved_changes() const {
+        return unsaved_changes;
     }
 
 }

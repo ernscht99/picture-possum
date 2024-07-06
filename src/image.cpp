@@ -105,4 +105,11 @@ namespace possum {
         }
     }
 
+    bool Image::operator==(const Image &rhs) const {
+        //not comparing pathes because they cannot change in the model anyway
+
+        return tag_ids == rhs.tag_ids && sha1_sum == rhs.sha1_sum && type == rhs.type
+        && creation_time == rhs.creation_time;
+    }
+
 }

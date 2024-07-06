@@ -73,6 +73,8 @@ namespace possum {
         ///Return the identifiers of all associated tags
         [[nodiscard]] const std::set<std::string> &getTagIds() const;
 
+        bool operator==(const Image& rhs) const;
+
     private:
         ///path of the image in the file system
         std::vector<std::filesystem::path> pathes;
