@@ -291,6 +291,13 @@ namespace possum{
     }
 
     void ImagesListModel::generate_sorted_dir(const std::filesystem::path &path) {
+        QProgressDialog progress{};
+        progress.setCancelButton(nullptr);
+        progress.setLabelText("Generating sorted directory structure");
+        progress.setWindowModality(Qt::WindowModal);
+        progress.setMaximum(static_cast<int>(image_map.size()));
+        size_t i = 0;
+
         std::filesystem::path sorted_path = path;
         sorted_path.append("sorted");
         if(exists(sorted_path)) {
@@ -344,9 +351,10 @@ namespace possum{
         by_day_path.append("by_day");
         std::filesystem::create_directory(by_day_path);
 
+
         //generate symlinks
-        for( auto it = image_map.begin(); it != image_map.end(); ++it) {
-            auto& image = it->second;
+        for(auto & it : image_map) {
+            auto& image = it.second;
             auto& image_path = image->getPath();
 
             //tags
@@ -391,6 +399,7 @@ namespace possum{
                 create_subdir_if_not_exist(day_path);
                 symlink(day_path, image_path);
             }
+            progress.setValue(i++);
         }
     }
 
