@@ -57,6 +57,7 @@ void MainWindow::load_dir() {
     QString path = QFileDialog::getExistingDirectory(this, tr("Open Image Directory"),
                                                      "/home/felix/Projects/picture_possum/test/test_dirs");
     if (!path.isEmpty()) {
+        images_model.clear();
         images_model.load_images(path.toStdString());
     }
 }
@@ -80,6 +81,16 @@ void MainWindow::display_image(const QModelIndex &index) {
     ui->label_file_name->setText(QString::fromStdString(current_image.getFilename()));
     ui->label_sha1->setText(data.toString());
     ui->label_exif->setText(time_to_string(current_image.getCreationTime()));
+    QString tags_string{};
+    for(auto & tag : current_image.getTagIds()) {
+        tags_string.append(settings.render_tag_full(tag));
+        tags_string.append("|");
+    }
+    if(tags_string.size() != 0)
+        tags_string.removeLast();
+
+    ui->label_tags->setText(tags_string);
+
     paint_image();
 }
 
@@ -143,6 +154,7 @@ void MainWindow::load_file() {
     if (path_string.isEmpty())
         return;
     try {
+        this->images_model.clear();
         this->images_model.load(std::filesystem::path{path_string.toStdString()});
         this->setSettings(this->images_model.getSettings());
     } catch (...) {

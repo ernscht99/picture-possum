@@ -72,7 +72,9 @@ namespace possum {
 
         [[nodiscard]] bool has_unsaved_changes() const;
 
-        [[nodiscard]] void generate_sorted_dir(const std::filesystem::path & path);
+        void generate_sorted_dir(const std::filesystem::path & path);
+
+        void clear();
     };
 }
 

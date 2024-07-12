@@ -399,8 +399,15 @@ namespace possum{
                 create_subdir_if_not_exist(day_path);
                 symlink(day_path, image_path);
             }
-            progress.setValue(i++);
+            progress.setValue(static_cast<int>(i++));
         }
+    }
+
+    void ImagesListModel::clear() {
+        this->hash_handles.clear();
+        this->image_map.clear();
+        this->unsaved_changes = false;
+        layoutChanged();
     }
 
 }
