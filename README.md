@@ -36,3 +36,6 @@ Build first, install dpdk, then use
 chmod +x makerelease.sh
 ./makerelease.sh version_number release_number
 ```
+
+# Misc
+Made with [TinyEXIF](https://github.com/cdcseacave/TinyEXIF)
