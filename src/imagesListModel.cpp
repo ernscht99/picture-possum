@@ -375,8 +375,8 @@ namespace possum{
             } else {
                 std::string date_string = from_timestamp(image->getCreationTime()).toStdString();
                 std::string_view year = std::string_view(date_string).substr(0, 4);
-                std::string_view month = std::string_view(date_string).substr(5, 7);
-                std::string_view day = std::string_view(date_string).substr(8, 10);
+                std::string_view month = std::string_view(date_string).substr(0, 7);
+                std::string_view day = std::string_view(date_string).substr(0, 10);
 
                 //year
                 auto year_path = get_subdir_path(by_year_path, year);
