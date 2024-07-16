@@ -38,3 +38,5 @@ set_target_properties(picture_possum PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
+install(TARGETS picture_possum DESTINATION bin)
