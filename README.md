@@ -31,10 +31,16 @@ make
 ```
 
 ### Making .deb releases
-Build first, install dpdk, then use 
+Build first (on ubuntu), then use 
 ```
 chmod +x release/ubuntu/makerelease.sh
 ./release/ubuntu/makerelease.sh version_number release_number
+```
+
+### Making pacman releases
+```
+chmod +x release/arch/makerelease.sh
+./release/ubuntu/makerelease.sh version_number [release_number]
 ```
 
 # Acknowlegements

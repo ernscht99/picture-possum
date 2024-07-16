@@ -1,5 +1,10 @@
 #!/bin/bash
 url=https://github.com/ernscht99/picture_possum/archive/refs/tags/v$1.tar.gz
+if [ -z "$2" ]; then
+  rel=0
+else
+  rel=$2
+fi
 wget $url
 shasum=$(sha256sum v$1.tar.gz| awk "{print \$1}")
 rm v$1.tar.gz
