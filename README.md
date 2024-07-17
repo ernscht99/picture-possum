@@ -18,8 +18,14 @@ Features:
 - Qt 6.4.2
 
 ### Ubuntu 24
-```
+```shell
 sudo apt install -y cmake g++ libssl-dev qt6-base-dev libgtest-dev build-essential 
+```
+
+### MacOS
+Install [homebrew](https://brew.sh/) beforehand.
+```shell
+brew install qt@6 openssl@3 googletest
 ```
 
 ### Build
