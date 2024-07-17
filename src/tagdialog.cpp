@@ -15,7 +15,7 @@ QDialog(parent),
 ui(new Ui::TagDialog)
 {
     ui->setupUi(this);
-    for (const std::string& symbol : symbols) {
+    for (const auto& symbol : symbols) {
         auto new_button = new QPushButton(QString::fromStdString(symbol), this);
         symbol_buttons.emplace_back(new_button);
         new_button->setCheckable(true);

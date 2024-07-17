@@ -17,7 +17,7 @@ class TagDialog : public QDialog
 
 public:
     ///A list of valid symbols that can be chosen for a tag
-    constexpr static const char *symbols[]{
+    constexpr static const char *symbols[]{ //cannot be strings because that breaks builds on Mac
             "❓",
             "❌",
             "⭕",
