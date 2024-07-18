@@ -123,7 +123,7 @@ void MainWindow::setSettings(const Settings &new_settings) {
 
 void MainWindow::paint_image() {
     picture_scene.clear();
-    QPixmap image_data(QString::fromStdString(current_image.getPath().c_str()));
+    QPixmap image_data(QString::fromStdString(current_image.getPath().generic_string()));
     if (not image_data.isNull()) {
         image_data = image_data.scaled(ui->graphicsView->size() * 0.95, Qt::KeepAspectRatio);
         picture_scene.addPixmap(image_data);
