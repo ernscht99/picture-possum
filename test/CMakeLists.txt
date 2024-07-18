@@ -3,10 +3,11 @@ set(TEST_SOURCES
         FindFilesTest.cpp
         Tester.cpp TestExif.cpp)
 #enable_testing()
-find_package(GTest REQUIRED)
-
+find_package(GTest)
+if(GTEST_FOUND)
 add_executable(tester ${TEST_SOURCES})
 target_include_directories(tester PUBLIC ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(tester PUBLIC
         possum_core
         GTest::GTest)
+endif ()
