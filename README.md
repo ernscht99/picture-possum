@@ -1,6 +1,6 @@
 # Picture Possum
+![Icon](res/icon.png)
 A program for manually, but efficiently, tagging and sorting large numbers of images.
-![Screenshot of the UI](res/ui.png)
 Features:
  - duplicate detection
  - creation date inferrence
@@ -8,6 +8,7 @@ Features:
  - keyboad shortcuts to quickly tag images
  - json export
  - creating a symlink based index structure in your filesystem according to your tags and creation dates
+![Screenshot of the UI](res/ui.png)
 ## Development
 ### Requirements
 (Not tested for other versions, so they may still work)
@@ -50,4 +51,4 @@ chmod +x release/arch/makerelease.sh
 ```
 
 # Acknowlegements
-Made with [Qt](https//www.qt.io/) and [TinyEXIF](https://github.com/cdcseacave/TinyEXIF)
+Made with [Qt](https//www.qt.io/), [TinyEXIF](https://github.com/cdcseacave/TinyEXIF), and [TinySHA1](https://github.com/mohaps/TinySHA1)

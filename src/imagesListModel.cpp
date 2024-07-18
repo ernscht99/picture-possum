@@ -89,7 +89,7 @@ namespace possum{
         }
         while(it != end(it)){ //periodically get the current progress while the threads are running
             progress.setValue(count);
-            usleep(200000);
+            std::this_thread::sleep_for(chrono::milliseconds(200));
         }
 
         for (auto& t :threadPool) {
