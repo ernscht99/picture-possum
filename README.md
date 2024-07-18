@@ -53,4 +53,4 @@ chmod +x release/arch/makerelease.sh
 ```
 
 # Acknowlegements
-Made with [Qt](https//www.qt.io/), [TinyEXIF](https://github.com/cdcseacave/TinyEXIF), and [TinySHA1](https://github.com/mohaps/TinySHA1)
+Made with [Qt](https://www.qt.io/), [TinyEXIF](https://github.com/cdcseacave/TinyEXIF), and [TinySHA1](https://github.com/mohaps/TinySHA1)
