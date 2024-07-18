@@ -1,5 +1,6 @@
 # Picture Possum
-![Icon](res/icon.png)
+![Icon](res/icon.png =256x256)
+
 A program for manually, but efficiently, tagging and sorting large numbers of images.
 Features:
  - duplicate detection
@@ -8,6 +9,7 @@ Features:
  - keyboad shortcuts to quickly tag images
  - json export
  - creating a symlink based index structure in your filesystem according to your tags and creation dates
+
 ![Screenshot of the UI](res/ui.png)
 ## Development
 ### Requirements
