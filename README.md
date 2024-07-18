@@ -1,5 +1,5 @@
 # Picture Possum
-<img (src="res/icon.png" width="256" height="256">
+<img src="res/icon.png" width="256" height="256">
 
 A program for manually, but efficiently, tagging and sorting large numbers of images.
 Features:
