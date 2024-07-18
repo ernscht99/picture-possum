@@ -5,6 +5,7 @@
 #else
 #include "TinySHA1.hpp"
 namespace {
+    ///If openssl is unavailable, uses TinySHA1 as a backup (which is slower)
     unsigned char *SHA1(const unsigned char *data, size_t count, unsigned char *md_buf) {
         sha1::SHA1 s;
         s.processBytes(data, count);
@@ -15,6 +16,7 @@ namespace {
 #endif
 
 namespace {
+    ///return the hex string digest of the data in buffer
     std::string get_sha1(const std::unique_ptr<char[]>& buffer, size_t length) {
         unsigned char digest[20];
         SHA1(reinterpret_cast<const unsigned char *>(buffer.get()), length, digest);

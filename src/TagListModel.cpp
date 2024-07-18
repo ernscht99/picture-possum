@@ -1,7 +1,3 @@
-//
-// Created by felix on 3/18/23.
-//
-
 #include "TagListModel.h"
 
 possum::TagListModel::TagListModel(const std::map<std::string, Tag>& tag_map, QObject *parent) : QAbstractTableModel(parent) {
@@ -61,7 +57,7 @@ bool possum::TagListModel::removeRows(int row, int count, const QModelIndex &par
     return false;
 }
 
-const Tag &possum::TagListModel::getTag(const QModelIndex &index) const {
+const possum::Tag &possum::TagListModel::getTag(const QModelIndex &index) const {
     return tags[index.row()];
 }
 
@@ -79,6 +75,6 @@ void possum::TagListModel::update_tag(const Tag & new_tag) {
     layoutChanged();
 }
 
-const std::vector<Tag> &possum::TagListModel::getTags() {
+const std::vector<possum::Tag> &possum::TagListModel::getTags() {
     return tags;
 }

@@ -29,7 +29,7 @@ public slots:
     void add_tag();
     void delete_tag();
     void edit_tag();
-    void change_tag(const Tag & tag);
+    void change_tag(const possum::Tag & tag);
 
 signals:
     void save_settings(const possum::Settings&);

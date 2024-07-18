@@ -1,7 +1,3 @@
-//
-// Created by felix on 3/2/23.
-//
-
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <thread>
@@ -46,7 +42,6 @@ namespace possum{
 
     void ImagesListModel::load_images(const std::string &directory_path) {
 
-        auto start = chrono::high_resolution_clock::now();
         QProgressDialog progress{};
         progress.setCancelButton(nullptr);
         progress.setLabelText("Detecting Duplicates");
@@ -115,11 +110,6 @@ namespace possum{
         }
          */
         emit layoutChanged();
-        auto stop = chrono::high_resolution_clock::now();
-        auto duration = duration_cast<chrono::microseconds>(stop - start);
-
-        cout << "Time taken by function: "
-             << duration.count() << " microseconds" << endl;
     }
 
     QVariant ImagesListModel::data(const QModelIndex &index, int role) const {

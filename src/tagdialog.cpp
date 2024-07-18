@@ -38,7 +38,7 @@ TagDialog::~TagDialog()
     delete ui;
 }
 
-TagDialog::TagDialog(const Tag &tag, QWidget *parent) : TagDialog(parent) {
+TagDialog::TagDialog(const possum::Tag &tag, QWidget *parent) : TagDialog(parent) {
     find_button(tag.emoji)->setChecked(true);
     ui->key_edit->setKeySequence(QKeySequence(tag.key_sequence));
     ui->title_edit->setText(QString::fromStdString(tag.name));
@@ -58,7 +58,7 @@ QAbstractButton * TagDialog::find_button(const std::string& symbol) const {
 
 void TagDialog::save() {
     std::string title = ui->title_edit->text().toStdString();
-    Tag tag{
+    possum::Tag tag{
         identifier.empty() ? generate_tag_identifier(title):identifier,
             symbol_buttons_group.checkedButton()->text().toStdString(),
             title,

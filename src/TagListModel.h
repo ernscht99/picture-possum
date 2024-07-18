@@ -1,7 +1,3 @@
-//
-// Created by felix on 3/18/23.
-//
-
 #ifndef PICTURE_POSSUM_TAGLISTMODEL_H
 #define PICTURE_POSSUM_TAGLISTMODEL_H
 
@@ -21,12 +17,16 @@ namespace possum {
         [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
         [[nodiscard]] QVariant headerData(int section, Qt::Orientation orientation,
                                           int role = Qt::DisplayRole) const override;
-
         [[nodiscard]] int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-
         bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+
+        ///Getter get the Tag at index
         [[nodiscard]] const Tag & getTag(const QModelIndex &index) const;
+
+        ///Update a Tag with new user-facing attributes
         void update_tag(const Tag & tag);
+
+        ///Return a vector of all tags
         const std::vector<Tag> & getTags();
 
     };

@@ -1,10 +1,5 @@
-//
-// Created by felix on 3/7/23.
-//
-
 #ifndef PICTURE_POSSUM_SETTINGS_H
 #define PICTURE_POSSUM_SETTINGS_H
-
 
 #include <map>
 #include "Tag.h"
@@ -18,6 +13,7 @@
 #include <QJsonValue>
 
 namespace possum {
+    ///Keys for json export
     static const QString DATE_FORMATS_KEY = "dates";
     static const QString VALID_TYPES_KEY = "valid_types";
     static const QString TAGS_ARRAY_KEY = "tags";

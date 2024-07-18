@@ -21,16 +21,18 @@
 #include <QJsonArray>
 
 namespace possum {
+    ///Keys for exporting to json
     static const QString IMAGE_PATHES_KEY = "pathes";
     static const QString IMAGE_CHECKSUM_KEY = "checksum";
     static const QString IMAGE_TAGS_KEY = "tag_ids";
     static const QString IMAGE_CREATION_KEY = "creation_time";
     static const QString IMAGE_TYPE_KEY = "type";
+
     ///Type for describing images in the filesystem
     class Image {
     public:
 
-///Getter for path
+    ///Getter for path
         [[nodiscard]] const std::filesystem::path &getPath() const;
 
         ///Getter for sha1sum

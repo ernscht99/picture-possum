@@ -1,7 +1,3 @@
-//
-// Created by felix on 3/7/23.
-//
-
 #include "Settings.h"
 
 

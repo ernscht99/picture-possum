@@ -36,12 +36,12 @@ public:
     explicit TagDialog(QWidget *parent = nullptr);
 
     ///For editing an existing tag
-    explicit TagDialog(const Tag& tag, QWidget *parent = nullptr);
+    explicit TagDialog(const possum::Tag& tag, QWidget *parent = nullptr);
     ~TagDialog() override;
 
     signals:
     ///Signals that the tag has been accepted to another widget
-    void tag_changed(const Tag & tag);
+    void tag_changed(const possum::Tag & tag);
 
     public slots:
     ///Save the currently edited tag. Sends out tag_changed
