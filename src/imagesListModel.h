@@ -12,6 +12,8 @@
 #include <QFont>
 #include "KeyGenerator.h"
 
+#define DUPLICATION_DETECTION_THREADS 4
+
 namespace possum {
     const static QString SETTINGS_KEY = "settings";
     const static QString IMAGE_LIST_KEY = "image_list";

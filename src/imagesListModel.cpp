@@ -4,6 +4,9 @@
 
 #include <QMessageBox>
 #include <QProgressDialog>
+#include <thread>
+#include <mutex>
+#include <iostream>
 #include "imagesListModel.h"
 
 namespace {
@@ -42,18 +45,63 @@ namespace possum{
     using namespace std::filesystem;
 
     void ImagesListModel::load_images(const std::string &directory_path) {
+
+        auto start = chrono::high_resolution_clock::now();
         QProgressDialog progress{};
         progress.setCancelButton(nullptr);
         progress.setLabelText("Detecting Duplicates");
         progress.setWindowModality(Qt::WindowModal);
         progress.setMaximum(static_cast<int>(std::distance(directory_iterator(directory_path), directory_iterator{})));
+        progress.show();
+
         int count = 0;
+        std::vector<std::thread> threadPool;
+        auto it = directory_iterator(directory_path);
+        std::mutex it_mutex;
+        for (size_t i = 0; i < DUPLICATION_DETECTION_THREADS; ++i){
+            threadPool.emplace_back([this, &it_mutex, &it, &count]() {
+                while(true) {
+                    std::unique_lock it_lock(it_mutex);
+                    if(it == end(it))
+                        return;
+                    const auto& dir_entry = *it++;
+                    count++;
+                    it_lock.unlock();
+                    ImageType file_type{parse_extension(dir_entry.path())};
+
+                    ///For each file in directory, see if it is an image file we want (valid type)
+                    if (dir_entry.is_regular_file() && settings.valid_types.contains(file_type)) {
+                        ///Read file into memory
+                        size_t file_size = dir_entry.file_size();
+                        unique_ptr<char[]> buffer = make_unique<char[]>(file_size);
+                        ifstream file_stream(dir_entry.path(), ios::binary | ios::in);
+                        file_stream.read(buffer.get(), static_cast<long>(file_size));
+                        get_exif_date(file_stream);
+                        ///Calculate key and push Image object to vector that is to be returned
+                        time_t estimated_date = estimate_date(file_stream, dir_entry.path().filename().string());
+
+                        it_lock.lock();
+                        insert_image({dir_entry.path(), generate_key(buffer, file_size, HashWholeFile), file_type,
+                                      estimated_date});
+                    }
+                }
+            });
+        }
+        while(it != end(it)){ //periodically get the current progress while the threads are running
+            progress.setValue(count);
+            usleep(200000);
+        }
+
+        for (auto& t :threadPool) {
+            t.join();
+        }
+        /*
         for (const auto &dir_entry : directory_iterator(directory_path)){
             ImageType file_type{parse_extension(dir_entry.path())};
 
             ///For each file in directory, see if it is an image file we want (valid type)
             if (dir_entry.is_regular_file() && settings.valid_types.contains(file_type)){
-                ///Read file into memory to calculate hash
+                ///Read file into memory
                 size_t file_size = dir_entry.file_size();
                 unique_ptr<char[]> buffer = make_unique<char[]>(file_size);
                 ifstream file_stream(dir_entry.path(), ios::binary | ios::in);
@@ -65,7 +113,13 @@ namespace possum{
             }
             progress.setValue(count++);
         }
+         */
         emit layoutChanged();
+        auto stop = chrono::high_resolution_clock::now();
+        auto duration = duration_cast<chrono::microseconds>(stop - start);
+
+        cout << "Time taken by function: "
+             << duration.count() << " microseconds" << endl;
     }
 
     QVariant ImagesListModel::data(const QModelIndex &index, int role) const {
