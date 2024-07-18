@@ -1,6 +1,18 @@
 #include "KeyGenerator.h"
-#include <openssl/sha.h>
 #include <sstream>
+#if __has_include(<openssl/sha.h>)
+#include <openssl/sha.h>
+#else
+#include "TinySHA1.hpp"
+namespace {
+    unsigned char *SHA1(const unsigned char *data, size_t count, unsigned char *md_buf) {
+        sha1::SHA1 s;
+        s.processBytes(data, count);
+        s.getDigestBytes(md_buf);
+        return md_buf;
+    }
+}
+#endif
 
 namespace {
     std::string get_sha1(const std::unique_ptr<char[]>& buffer, size_t length) {

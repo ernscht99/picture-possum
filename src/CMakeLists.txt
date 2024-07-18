@@ -12,6 +12,7 @@ set(POSSUM_SOURCES
         imagesListModel.h
         TinyEXIF.cpp
         TinyEXIF.h
+        TinySHA1.hpp
         Settings.cpp
         Settings.h
         Tag.cpp
@@ -33,8 +34,14 @@ SET(CMAKE_BUILD_TYPE Debug)
 add_executable(picture_possum
         main.cpp)
 
-target_link_libraries(possum_core PUBLIC Qt6::Widgets OpenSSL::SSL)
-target_link_libraries(picture_possum PUBLIC Qt6::Widgets OpenSSL::SSL)
+find_library(OPENSSL_FOUND OpenSSL::SSL)
+if(OPENSSL_FOUND)
+target_link_libraries(possum_core PUBLIC OpenSSL::SSL)
+target_link_libraries(picture_possum PUBLIC OpenSSL::SSL)
+endif()
+
+target_link_libraries(possum_core PUBLIC Qt6::Widgets)
+target_link_libraries(picture_possum PUBLIC Qt6::Widgets)
 target_link_libraries(picture_possum PUBLIC possum_core)
 set_target_properties(picture_possum PROPERTIES
     MACOSX_BUNDLE TRUE
