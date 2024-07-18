@@ -10,7 +10,6 @@
 #include <vector>
 #include <filesystem>
 #include <regex>
-#include <openssl/sha.h>
 #include <set>
 #include <QMetaType>
 #include <utility>

@@ -7,16 +7,6 @@
 #include "imagesListModel.h"
 
 namespace {
-    std::string get_sha1(const std::unique_ptr<char[]>& buffer, size_t length) {
-        unsigned char digest[20];
-        SHA1(reinterpret_cast<const unsigned char *>(buffer.get()), length, digest);
-        std::ostringstream readable;
-        readable << std::hex;
-        for (unsigned char c : digest){
-            readable << static_cast<int>(c);
-        }
-        return readable.str();
-    }
     QString from_timestamp(time_t timestamp) {
         char time_string_buffer[64];
         tm time{};
@@ -69,9 +59,9 @@ namespace possum{
                 ifstream file_stream(dir_entry.path(), ios::binary | ios::in);
                 file_stream.read(buffer.get(), static_cast<long>(file_size));
                 get_exif_date(file_stream);
-                ///Calculate hash and push Image object to vector that is to be returned
+                ///Calculate key and push Image object to vector that is to be returned
                 time_t estimated_date = estimate_date(file_stream, dir_entry.path().filename().string());
-                insert_image({dir_entry.path(), get_sha1(buffer, file_size), file_type, estimated_date});
+                insert_image({dir_entry.path(), generate_key(buffer, file_size, HashWholeFile), file_type, estimated_date});
             }
             progress.setValue(count++);
         }

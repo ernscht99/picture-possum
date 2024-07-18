@@ -23,7 +23,9 @@ set(POSSUM_SOURCES
         TagListModel.h
         tagdialog.cpp
         tagdialog.h
-        )
+        KeyGenerator.cpp
+        KeyGenerator.h
+)
 add_library(possum_core ${POSSUM_SOURCES})
 
 SET(CMAKE_BUILD_TYPE Debug)

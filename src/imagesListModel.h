@@ -1,7 +1,3 @@
-//
-// Created by felix on 3/2/23.
-//
-
 #ifndef PICTURE_POSSUM_IMAGESLISTMODEL_H
 #define PICTURE_POSSUM_IMAGESLISTMODEL_H
 #include <QAbstractItemModel>
@@ -14,6 +10,7 @@
 #include <filesystem>
 #include <QFile>
 #include <QFont>
+#include "KeyGenerator.h"
 
 namespace possum {
     const static QString SETTINGS_KEY = "settings";
