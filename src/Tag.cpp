@@ -24,4 +24,4 @@ namespace possum {
                    json[TAG_NAME_KEY].toString().toStdString(),
                    QKeySequence::fromString(json[TAG_KEYSEQUENCE_KEY].toString())};
     }
-}
+} // namespace possum

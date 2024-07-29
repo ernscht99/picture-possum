@@ -8,7 +8,7 @@
 
 namespace Ui {
     class TagDialog;
-}
+} // namespace Ui
 
 ///This dialog is shown to the user to create or edit a Tag
 class TagDialog : public QDialog {

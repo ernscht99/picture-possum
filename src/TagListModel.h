@@ -29,14 +29,11 @@ namespace possum {
         ///Getter get the Tag at index
         [[nodiscard]] const Tag &getTag(const QModelIndex &index) const;
 
-        ///Update a Tag with new user-facing attributes
-        void update_tag(const Tag &tag);
-
         ///Return a vector of all tags
         const std::vector<Tag> &getTags();
 
     };
-}
+} // namespace possum
 
 
 #endif //PICTURE_POSSUM_TAGLISTMODEL_H

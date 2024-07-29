@@ -18,7 +18,7 @@ namespace {
             {possum::JPEG, possum::PNG},
             {"%Y-%m-%d", "%Y%m%d",}
     };
-}
+} // namespace
 using namespace possum;
 
 MainWindow::MainWindow(QWidget *parent)

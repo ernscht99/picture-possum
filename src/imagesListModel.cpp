@@ -35,7 +35,7 @@ namespace {
         path_dir_copy.append(path_file.filename().c_str());
         std::filesystem::create_symlink(path_file, path_dir_copy);
     }
-}
+} // namespace
 
 namespace possum {
     using namespace std;
@@ -262,8 +262,8 @@ namespace possum {
         layoutChanged();
     }
 
-    void ImagesListModel::setSettings(const Settings &settings) {
-        ImagesListModel::settings = settings;
+    void ImagesListModel::setSettings(const Settings & settings_new) {
+        ImagesListModel::settings = settings_new;
     }
 
 
@@ -413,9 +413,10 @@ namespace possum {
                 symlink(no_date_path, image_path);
             } else {
                 std::string date_string = from_timestamp(image->getCreationTime()).toStdString();
-                std::string_view year = std::string_view(date_string).substr(0, 4);
-                std::string_view month = std::string_view(date_string).substr(0, 7);
-                std::string_view day = std::string_view(date_string).substr(0, 10);
+                std::string_view date_string_view{date_string};
+                std::string_view year = date_string_view.substr(0, 4);
+                std::string_view month = date_string_view.substr(0, 7);
+                std::string_view day = date_string_view.substr(0, 10);
 
                 //year
                 auto year_path = get_subdir_path(by_year_path, year);
@@ -448,5 +449,4 @@ namespace possum {
         this->unsaved_changes = false;
         layoutChanged();
     }
-
-}
+} // namespace possum

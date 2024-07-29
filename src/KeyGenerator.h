@@ -6,7 +6,7 @@
 
 namespace possum {
     ///This is a list of algorithms to generate keys for duplicate detection (see imagesListModel.h)
-    enum KeyAlgorithm {
+    enum KeyAlgorithm : uint16_t {
         HashWholeFile,
     };
 

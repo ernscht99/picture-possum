@@ -23,4 +23,4 @@ namespace possum {
         }
     }
 
-}
+} // namespace possum

@@ -12,7 +12,7 @@
 
 namespace Ui {
     class SettingsWidget;
-}
+} // namespace Ui
 
 class SettingsWidget : public QWidget {
 Q_OBJECT
@@ -20,7 +20,7 @@ Q_OBJECT
 public:
     explicit SettingsWidget(possum::Settings &, QWidget *parent = nullptr);
 
-    ~SettingsWidget();
+    ~SettingsWidget() override;
 
 
 public slots:

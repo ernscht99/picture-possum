@@ -63,20 +63,6 @@ const possum::Tag &possum::TagListModel::getTag(const QModelIndex &index) const 
     return tags[index.row()];
 }
 
-void possum::TagListModel::update_tag(const Tag &new_tag) {
-    for (auto &tag: tags) {
-        if (tag.getIdentifier() == new_tag.getIdentifier()) {
-            tag.key_sequence = new_tag.key_sequence;
-            tag.name = new_tag.name;
-            tag.emoji = new_tag.emoji;
-            layoutChanged();
-            return;
-        }
-    }
-    tags.emplace_back(new_tag);
-    layoutChanged();
-}
-
 const std::vector<possum::Tag> &possum::TagListModel::getTags() {
     return tags;
 }

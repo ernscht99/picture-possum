@@ -10,7 +10,7 @@ namespace {
         title.erase(std::remove_if(title.begin(), title.end(), not_alphanumeric), title.end());
         return title;
     }
-}
+} // namespace
 
 TagDialog::TagDialog(QWidget *parent) :
         QDialog(parent),

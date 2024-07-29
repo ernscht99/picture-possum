@@ -20,7 +20,7 @@ namespace possum {
     const static QString SETTINGS_KEY = "settings";
     const static QString IMAGE_LIST_KEY = "image_list";
 
-    enum ImageListRoles {
+    enum ImageListRoles : uint16_t {
         DataView = Qt::UserRole
     };
 
@@ -79,8 +79,8 @@ namespace possum {
         ///Update an existing image
         void update_image(const Image &updater);
 
-        ///Setter for the settings
-        void setSettings(const Settings &settings);
+        ///Setter for the settings_new
+        void setSettings(const Settings & settings_new);
 
         ///Getter for settings
         [[nodiscard]] const Settings &getSettings() const;
@@ -113,6 +113,6 @@ namespace possum {
         ///Delete all Image Objects from the structure
         void clear();
     };
-}
+} // namespace possum
 
 #endif //PICTURE_POSSUM_IMAGESLISTMODEL_H

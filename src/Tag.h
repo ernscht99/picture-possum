@@ -37,7 +37,7 @@ namespace possum {
         ///Getter for Identifier
         [[nodiscard]] const std::string &getIdentifier() const;
     };
-}
+} // namespace possum
 
 
 #endif //PICTURE_POSSUM_TAG_H
