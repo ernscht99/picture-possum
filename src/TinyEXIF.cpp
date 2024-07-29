@@ -56,8 +56,8 @@ namespace {
 #endif
 
 
+    /*
 namespace Tools {
-
 	// search string inside a string, case sensitive
 	static const char* strrnstr(const char* haystack, const char* needle, size_t len) {
 		const size_t needle_len(strlen(needle));
@@ -91,6 +91,7 @@ namespace Tools {
 	}
 
 } // namespace Tools
+*/
 
 
 namespace TinyEXIF {
