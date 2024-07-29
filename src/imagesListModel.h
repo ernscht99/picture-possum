@@ -1,5 +1,6 @@
 #ifndef PICTURE_POSSUM_IMAGESLISTMODEL_H
 #define PICTURE_POSSUM_IMAGESLISTMODEL_H
+
 #include <QAbstractItemModel>
 #include <QJsonObject>
 #include <QJsonDocument>
@@ -45,16 +46,21 @@ namespace possum {
         bool unsaved_changes;
 
         ///Constructor
-        explicit ImagesListModel(Settings settings, std::map<std::string, std::unique_ptr<Image>> images, QObject *parent = nullptr);
+        explicit ImagesListModel(Settings settings, std::map<std::string, std::unique_ptr<Image>> images,
+                                 QObject *parent = nullptr);
 
     public:
 
         ///Must be implemented because QAbstractListModel
         explicit ImagesListModel(Settings settings, QObject *parent = nullptr);
+
         [[nodiscard]] int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
         [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
+
         [[nodiscard]] QVariant headerData(int section, Qt::Orientation orientation,
-                            int role = Qt::DisplayRole) const override;
+                                          int role = Qt::DisplayRole) const override;
+
         [[nodiscard]] int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
         ///Sort the Images by some feature indicated by the column
@@ -65,13 +71,13 @@ namespace possum {
         void load_images(const std::string &directory_path);
 
         ///Insert Image into structure
-        void insert_image(const Image&);
+        void insert_image(const Image &);
 
         ///Return Image that corresponds to a hash. Empty Image if there is none.
-        Image get_image(const std::string& hash);
+        Image get_image(const std::string &hash);
 
         ///Update an existing image
-        void update_image(const Image& updater);
+        void update_image(const Image &updater);
 
         ///Setter for the settings
         void setSettings(const Settings &settings);
@@ -90,19 +96,19 @@ namespace possum {
         [[nodiscard]] QJsonObject to_json() const;
 
         ///Reconstruct the state of a structure from a json Object
-        static ImagesListModel from_json(const QJsonObject&);
+        static ImagesListModel from_json(const QJsonObject &);
 
         ///Write the state of the structure to disk as a json file
-        [[nodiscard]] bool save(const std::filesystem::path & path);
+        [[nodiscard]] bool save(const std::filesystem::path &path);
 
         ///Reconstruct the state of the structure from a json file
-        void load(const std::filesystem::path & path);
+        void load(const std::filesystem::path &path);
 
         ///Getter for the unsaved changes flag
         [[nodiscard]] bool has_unsaved_changes() const;
 
         ///Create an index structure comprised of symlinks for the Images on the disk
-        void generate_sorted_dir(const std::filesystem::path & path);
+        void generate_sorted_dir(const std::filesystem::path &path);
 
         ///Delete all Image Objects from the structure
         void clear();

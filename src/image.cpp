@@ -2,8 +2,8 @@
 
 namespace possum {
 
-    Image::Image(const std::string& path, std::string sha1Sum, ImageType type, time_t creation_time) :
-    sha1_sum(std::move(sha1Sum)), type(type), creation_time(creation_time) {
+    Image::Image(const std::string &path, std::string sha1Sum, ImageType type, time_t creation_time) :
+            sha1_sum(std::move(sha1Sum)), type(type), creation_time(creation_time) {
         pathes.emplace_back(path);
     }
 
@@ -56,10 +56,10 @@ namespace possum {
         QJsonObject root{};
         QJsonArray pathes_arr{};
         QJsonArray tags_arr{};
-        for (const auto & path : pathes) {
+        for (const auto &path: pathes) {
             pathes_arr.push_back(QString::fromStdString(path.string()));
         }
-        for (const auto & tag_id : tag_ids) {
+        for (const auto &tag_id: tag_ids) {
             tags_arr.push_back(QString::fromStdString(tag_id));
         }
         root[IMAGE_CHECKSUM_KEY] = QString::fromStdString(sha1_sum);
@@ -70,32 +70,32 @@ namespace possum {
         return root;
     }
 
-    Image Image::from_json(const QJsonObject & json) {
+    Image Image::from_json(const QJsonObject &json) {
         std::vector<std::string> path_strings;
         std::set<std::string> tag_ids;
-        for(auto const & path_string : json[IMAGE_PATHES_KEY].toArray()) {
+        for (auto const &path_string: json[IMAGE_PATHES_KEY].toArray()) {
             path_strings.emplace_back(path_string.toString().toStdString());
         }
-        for(auto const & tag_id : json[IMAGE_TAGS_KEY].toArray()) {
+        for (auto const &tag_id: json[IMAGE_TAGS_KEY].toArray()) {
             tag_ids.insert(tag_id.toString().toStdString());
         }
 
         return Image{
-            path_strings,
-            json[IMAGE_CHECKSUM_KEY].toString().toStdString(),
-            static_cast<ImageType>(json[IMAGE_TYPE_KEY].toInt()),
-            json[IMAGE_CREATION_KEY].toInt(),
-            tag_ids
+                path_strings,
+                json[IMAGE_CHECKSUM_KEY].toString().toStdString(),
+                static_cast<ImageType>(json[IMAGE_TYPE_KEY].toInt()),
+                json[IMAGE_CREATION_KEY].toInt(),
+                tag_ids
         };
     }
 
     Image::Image(const std::vector<std::string> &pathes,
-                 std::string  sha1Sum,
+                 std::string sha1Sum,
                  ImageType type,
                  time_t creation_time,
-                 const std::set<std::string>& tag_ids) :
-    sha1_sum(std::move(sha1Sum)), tag_ids(tag_ids), type(type), creation_time(creation_time) {
-        for (auto const & path_string : pathes) {
+                 const std::set<std::string> &tag_ids) :
+            sha1_sum(std::move(sha1Sum)), tag_ids(tag_ids), type(type), creation_time(creation_time) {
+        for (auto const &path_string: pathes) {
             this->pathes.emplace_back(path_string);
         }
     }
@@ -104,7 +104,7 @@ namespace possum {
         //not comparing pathes because they cannot change in the model anyway
 
         return tag_ids == rhs.tag_ids && sha1_sum == rhs.sha1_sum && type == rhs.type
-        && creation_time == rhs.creation_time;
+               && creation_time == rhs.creation_time;
     }
 
 }

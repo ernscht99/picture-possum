@@ -10,11 +10,13 @@ namespace {
     }
 
     ///Some default settings
-    possum::Settings default_settings{{
-                                              {"trash", "A", "Trash", Qt::Key_T},
-                                              {"family", "👨", "Familie", Qt::Key_F}},
-                                      {       possum::JPEG, possum::PNG},
-                                      {       "%Y-%m-%d",   "%Y%m%d",}
+    possum::Settings default_settings{
+            {
+                    {"trash", "A", "Trash", Qt::Key_T},
+                    {"family", "👨", "Familie", Qt::Key_F}
+            },
+            {possum::JPEG, possum::PNG},
+            {"%Y-%m-%d", "%Y%m%d",}
     };
 }
 using namespace possum;
@@ -82,12 +84,12 @@ void MainWindow::display_image(const QModelIndex &index) {
     ui->label_sha1->setText(data.toString());
     ui->label_exif->setText(time_to_string(current_image.getCreationTime()));
     QString tags_string{};
-    for(auto & tag : current_image.getTagIds()) {
+    for (auto &tag: current_image.getTagIds()) {
         tags_string.append(QString::fromStdString(settings.render_tag_full(tag)));
         tags_string.append("|");
     }
-    if(tags_string.size() != 0)
-        tags_string.remove(tags_string.size()-1, 1);
+    if (tags_string.size() != 0)
+        tags_string.remove(tags_string.size() - 1, 1);
 
     ui->label_tags->setText(tags_string);
 
@@ -104,15 +106,15 @@ void MainWindow::setSettings(const Settings &new_settings) {
         this->current_image.clear_tags();
         this->images_model.update_image(current_image);
     };
-    shortcuts.emplace_back(std::make_unique<QShortcut>(QKeySequence{"Backspace"},this,delete_tags));
+    shortcuts.emplace_back(std::make_unique<QShortcut>(QKeySequence{"Backspace"}, this, delete_tags));
 
     auto move_down = [this]() {
-        this->ui->tableView->selectRow(this->ui->tableView->currentIndex().row()+1);
+        this->ui->tableView->selectRow(this->ui->tableView->currentIndex().row() + 1);
     };
-    shortcuts.emplace_back(std::make_unique<QShortcut>(QKeySequence{"Return"},this,move_down));
-    shortcuts.emplace_back(std::make_unique<QShortcut>(QKeySequence{"Space"},this,move_down));
+    shortcuts.emplace_back(std::make_unique<QShortcut>(QKeySequence{"Return"}, this, move_down));
+    shortcuts.emplace_back(std::make_unique<QShortcut>(QKeySequence{"Space"}, this, move_down));
 
-    for ( const auto & [key, value] : new_settings.tags) {
+    for (const auto &[key, value]: new_settings.tags) {
         auto tag_image_with = [this, value]() {
             this->current_image.add_tag(value);
             this->images_model.update_image(current_image);
@@ -139,7 +141,7 @@ void MainWindow::save_file() {
     QString path_string = QFileDialog::getSaveFileName(this, "Save Session File", "/home", "*.json");
     if (path_string.isEmpty())
         return;
-    if(!path_string.endsWith(".json"))
+    if (!path_string.endsWith(".json"))
         path_string.append(".json");
     if (!images_model.save(std::filesystem::path{path_string.toStdString()})) {
         QMessageBox msgBox;
@@ -165,7 +167,7 @@ void MainWindow::load_file() {
 }
 
 bool MainWindow::ask_about_unsaved() {
-    if( this->images_model.has_unsaved_changes()) {
+    if (this->images_model.has_unsaved_changes()) {
         QMessageBox msgBox;
         msgBox.setText("There are unsaved Changes");
         msgBox.setInformativeText("Do you want to save your changes?");
@@ -187,7 +189,7 @@ bool MainWindow::ask_about_unsaved() {
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
-    if(ask_about_unsaved()) {
+    if (ask_about_unsaved()) {
         event->accept();
     } else {
         event->ignore();

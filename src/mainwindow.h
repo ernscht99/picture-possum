@@ -14,65 +14,69 @@
 #include <QShortcut>
 
 QT_BEGIN_NAMESPACE
-    namespace Ui { class MainWindow; }
-    QT_END_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
 
-    class MainWindow : public QMainWindow {
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+Q_OBJECT
 
-    public:
-        MainWindow(QWidget *parent = nullptr);
-        ~MainWindow();
+public:
+    MainWindow(QWidget *parent = nullptr);
 
-    private:
-        Ui::MainWindow *ui;
+    ~MainWindow();
 
-        ///Object representing the current settings
-        possum::Settings settings;
+private:
+    Ui::MainWindow *ui;
 
-        ///Container for the loaded images
-        possum::ImagesListModel images_model;
+    ///Object representing the current settings
+    possum::Settings settings;
 
-        ///UI element for displaying a single pictures
-        QGraphicsScene picture_scene;
+    ///Container for the loaded images
+    possum::ImagesListModel images_model;
 
-        ///The currently displayed image
-        possum::Image current_image;
+    ///UI element for displaying a single pictures
+    QGraphicsScene picture_scene;
 
-        ///Vector of shortcuts for quickly tagging images
-        std::vector<std::unique_ptr<QShortcut>> shortcuts;
+    ///The currently displayed image
+    possum::Image current_image;
 
-        ///display the current image in the UI container
-        void paint_image();
+    ///Vector of shortcuts for quickly tagging images
+    std::vector<std::unique_ptr<QShortcut>> shortcuts;
 
-        ///Open a dialog asking if unsaved changes should be saved. Returns if user want to proceed
-        bool ask_about_unsaved();
-    protected:
-        ///Resize the displayed image when the size of the main window changes
-        void resizeEvent(QResizeEvent *event) override;
+    ///display the current image in the UI container
+    void paint_image();
 
-        void closeEvent(QCloseEvent *event) override;
+    ///Open a dialog asking if unsaved changes should be saved. Returns if user want to proceed
+    bool ask_about_unsaved();
 
-    public slots:
-        ///Open a dialog to open a directory that contains images
-        void load_dir();
+protected:
+    ///Resize the displayed image when the size of the main window changes
+    void resizeEvent(QResizeEvent *event) override;
 
-        ///Load an image from the image container to be displayed
-        void display_image(const QModelIndex &);
+    void closeEvent(QCloseEvent *event) override;
 
-        ///Open a widget for opening settings
-        void open_settings();
+public slots:
 
-        ///Load a session file
-        void load_file();
+    ///Open a dialog to open a directory that contains images
+    void load_dir();
 
-        ///Save a session file
-        void save_file();
+    ///Load an image from the image container to be displayed
+    void display_image(const QModelIndex &);
 
-        void generate_sorted_dir();
+    ///Open a widget for opening settings
+    void open_settings();
 
-        ///Update the new_settings.
-        void setSettings(const possum::Settings &new_settings);
+    ///Load a session file
+    void load_file();
 
-    };
+    ///Save a session file
+    void save_file();
+
+    void generate_sorted_dir();
+
+    ///Update the new_settings.
+    void setSettings(const possum::Settings &new_settings);
+
+};
+
 #endif // MAINWINDOW_H

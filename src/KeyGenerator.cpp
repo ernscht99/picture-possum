@@ -1,7 +1,10 @@
 #include "KeyGenerator.h"
 #include <sstream>
+
 #if __has_include(<openssl/sha.h>)
+
 #include <openssl/sha.h>
+
 #else
 #include "TinySHA1.hpp"
 namespace {
@@ -17,12 +20,12 @@ namespace {
 
 namespace {
     ///return the hex string digest of the data in buffer
-    std::string get_sha1(const std::unique_ptr<char[]>& buffer, size_t length) {
+    std::string get_sha1(const std::unique_ptr<char[]> &buffer, size_t length) {
         unsigned char digest[20];
         SHA1(reinterpret_cast<const unsigned char *>(buffer.get()), length, digest);
         std::ostringstream readable;
         readable << std::hex;
-        for (unsigned char c : digest){
+        for (unsigned char c: digest) {
             readable << static_cast<int>(c);
         }
         return readable.str();
@@ -30,7 +33,7 @@ namespace {
 }
 
 namespace possum {
-    std::string generate_key(const std::unique_ptr<char[]>& buffer, size_t length, KeyAlgorithm algorithm) {
+    std::string generate_key(const std::unique_ptr<char[]> &buffer, size_t length, KeyAlgorithm algorithm) {
         switch (algorithm) {
             case HashWholeFile:
             default:

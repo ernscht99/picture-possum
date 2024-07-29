@@ -27,7 +27,7 @@ namespace possum {
     class Image {
     public:
 
-    ///Getter for path
+        ///Getter for path
         [[nodiscard]] const std::filesystem::path &getPath() const;
 
         ///Getter for sha1sum
@@ -37,10 +37,10 @@ namespace possum {
         [[nodiscard]] std::string getFilename() const;
 
         ///Add a path to that image on disk
-        void add_path(const std::filesystem::path&);
+        void add_path(const std::filesystem::path &);
 
         ///Add a tag to this image
-        void add_tag(const Tag& tag);
+        void add_tag(const Tag &tag);
 
         ///Delete all associated tags
         void clear_tags();
@@ -49,7 +49,7 @@ namespace possum {
         [[nodiscard]] ImageType getType() const;
 
         ///Constructing Image data structure. sha1sum needs to be calculated beforehand.
-        Image(const std::string& path, std::string sha1Sum, ImageType type, time_t creation_time);
+        Image(const std::string &path, std::string sha1Sum, ImageType type, time_t creation_time);
 
         ///Construct a dummy image, for display when program is first opened
         Image();
@@ -64,12 +64,12 @@ namespace possum {
         [[nodiscard]] QJsonObject to_json() const;
 
         ///Parse Image object from a JSON representation
-        static Image from_json(const QJsonObject&);
+        static Image from_json(const QJsonObject &);
 
         ///Return the identifiers of all associated tags
         [[nodiscard]] const std::set<std::string> &getTagIds() const;
 
-        bool operator==(const Image& rhs) const;
+        bool operator==(const Image &rhs) const;
 
     private:
         ///path of the image in the file system
@@ -88,7 +88,8 @@ namespace possum {
         time_t creation_time;
 
         ///Constructor for copying an Image, used when parsing from json
-        Image(const std::vector<std::string>& pathes, std::string  sha1Sum, ImageType type, time_t creation_time, const std::set<std::string>& tag_ids);
+        Image(const std::vector<std::string> &pathes, std::string sha1Sum, ImageType type, time_t creation_time,
+              const std::set<std::string> &tag_ids);
 
     };
 }

@@ -14,25 +14,32 @@ namespace Ui {
     class SettingsWidget;
 }
 
-class SettingsWidget : public QWidget
-{
+class SettingsWidget : public QWidget {
 Q_OBJECT
 
 public:
-    explicit SettingsWidget(possum::Settings&, QWidget *parent = nullptr);
+    explicit SettingsWidget(possum::Settings &, QWidget *parent = nullptr);
+
     ~SettingsWidget();
 
 
 public slots:
+
     void accept(QAbstractButton *);
+
     void save();
+
     void add_tag();
+
     void delete_tag();
+
     void edit_tag();
-    void change_tag(const possum::Tag & tag);
+
+    void change_tag(const possum::Tag &tag);
 
 signals:
-    void save_settings(const possum::Settings&);
+
+    void save_settings(const possum::Settings &);
 
 private:
     Ui::SettingsWidget *ui;
@@ -40,6 +47,7 @@ private:
     possum::TagListModel tags;
 
     void delete_date_format();
+
     void add_date_format();
 
 };

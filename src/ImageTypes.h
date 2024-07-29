@@ -1,7 +1,3 @@
-//
-// Created by felix on 3/7/23.
-//
-
 #ifndef PICTURE_POSSUM_IMAGETYPES_H
 #define PICTURE_POSSUM_IMAGETYPES_H
 
@@ -15,6 +11,6 @@ namespace possum {
     };
 
     ///Associate the enum parsed from a file name
-    ImageType parse_extension(const std::string& file_path);
+    ImageType parse_extension(const std::string &file_path);
 }
 #endif //PICTURE_POSSUM_IMAGETYPES_H

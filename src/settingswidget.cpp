@@ -2,7 +2,8 @@
 #include "ui_settingswidget.h"
 
 SettingsWidget::SettingsWidget(possum::Settings &settings, QWidget *parent) :
-        QWidget(parent, Qt::Popup| Qt::Dialog), ui(new Ui::SettingsWidget), date_formats(settings.date_conversion_formats),
+        QWidget(parent, Qt::Popup | Qt::Dialog), ui(new Ui::SettingsWidget),
+        date_formats(settings.date_conversion_formats),
         tags(settings.tags) {
     ui->setupUi(this);
     connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingsWidget::accept);
@@ -20,23 +21,21 @@ SettingsWidget::SettingsWidget(possum::Settings &settings, QWidget *parent) :
     ui->checkbox_png->setChecked(settings.valid_types.contains(possum::PNG));
 }
 
-SettingsWidget::~SettingsWidget()
-{
+SettingsWidget::~SettingsWidget() {
     delete ui;
 }
 
 
-
 void SettingsWidget::accept(QAbstractButton *button) {
     switch (ui->buttonBox->standardButton(button)) {
-        case(QDialogButtonBox::Save):
+        case (QDialogButtonBox::Save):
             save();
             break;
-        case(QDialogButtonBox::Ok):
+        case (QDialogButtonBox::Ok):
             save();
             close();
             break;
-        case(QDialogButtonBox::Cancel):
+        case (QDialogButtonBox::Cancel):
         default:
             close();
     }
@@ -44,9 +43,9 @@ void SettingsWidget::accept(QAbstractButton *button) {
 
 void SettingsWidget::save() {
     std::set<possum::ImageType> selected_types{};
-    if(ui->checkbox_jpg->isChecked())
+    if (ui->checkbox_jpg->isChecked())
         selected_types.insert(possum::ImageType::JPEG);
-    if(ui->checkbox_png->isChecked())
+    if (ui->checkbox_png->isChecked())
         selected_types.insert(possum::ImageType::PNG);
 
     possum::Settings settings{
@@ -58,7 +57,7 @@ void SettingsWidget::save() {
 }
 
 void SettingsWidget::delete_date_format() {
-    QItemSelectionModel* selectionModel = ui->date_format_view->selectionModel();
+    QItemSelectionModel *selectionModel = ui->date_format_view->selectionModel();
     if (selectionModel->hasSelection()) {
         date_formats.removeRows(selectionModel->selectedRows()[0].row(), 1);
     }
@@ -76,7 +75,7 @@ void SettingsWidget::add_tag() {
 }
 
 void SettingsWidget::edit_tag() {
-    QItemSelectionModel* selectionModel = ui->tags_table->selectionModel();
+    QItemSelectionModel *selectionModel = ui->tags_table->selectionModel();
     if (!selectionModel->hasSelection())
         return;
     auto x = new TagDialog{tags.getTag(selectionModel->currentIndex()), this};
@@ -84,12 +83,12 @@ void SettingsWidget::edit_tag() {
 }
 
 void SettingsWidget::delete_tag() {
-    QItemSelectionModel* selectionModel = ui->tags_table->selectionModel();
+    QItemSelectionModel *selectionModel = ui->tags_table->selectionModel();
     if (selectionModel->hasSelection()) {
         tags.removeRows(selectionModel->selectedRows()[0].row(), 1);
     }
 }
 
-void SettingsWidget::change_tag(const possum::Tag & tag) {
+void SettingsWidget::change_tag(const possum::Tag &tag) {
     tags.update_tag(tag);
 }

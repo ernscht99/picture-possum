@@ -1,7 +1,8 @@
 #include "TagListModel.h"
 
-possum::TagListModel::TagListModel(const std::map<std::string, Tag>& tag_map, QObject *parent) : QAbstractTableModel(parent) {
-    for ( const auto & kv : tag_map) {
+possum::TagListModel::TagListModel(const std::map<std::string, Tag> &tag_map, QObject *parent) : QAbstractTableModel(
+        parent) {
+    for (const auto &kv: tag_map) {
         tags.emplace_back(kv.second);
     }
 }
@@ -30,9 +31,9 @@ QVariant possum::TagListModel::headerData(int section, Qt::Orientation orientati
     if (role != Qt::DisplayRole)
         return {};
     if (orientation == Qt::Horizontal)
-        switch (section){
+        switch (section) {
             case 0:
-                return { QString("Symbol") };
+                return {QString("Symbol")};
             case 1:
                 return {QString("Shortcut")};
             case 2:
@@ -49,7 +50,7 @@ int possum::TagListModel::columnCount(const QModelIndex &) const {
 }
 
 bool possum::TagListModel::removeRows(int row, int count, const QModelIndex &) {
-    if(row+count-1< rowCount()) {
+    if (row + count - 1 < rowCount()) {
         tags.erase(tags.begin() + row, tags.begin() + row + count);
         layoutChanged();
         return true;
@@ -61,8 +62,8 @@ const possum::Tag &possum::TagListModel::getTag(const QModelIndex &index) const 
     return tags[index.row()];
 }
 
-void possum::TagListModel::update_tag(const Tag & new_tag) {
-    for (auto &tag : tags) {
+void possum::TagListModel::update_tag(const Tag &new_tag) {
+    for (auto &tag: tags) {
         if (tag.getIdentifier() == new_tag.getIdentifier()) {
             tag.key_sequence = new_tag.key_sequence;
             tag.name = new_tag.name;
