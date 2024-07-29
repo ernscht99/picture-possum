@@ -88,7 +88,3 @@ void SettingsWidget::delete_tag() {
         tags.removeRows(selectionModel->selectedRows()[0].row(), 1);
     }
 }
-
-void SettingsWidget::change_tag(const possum::Tag &tag) {
-    tags.update_tag(tag);
-}

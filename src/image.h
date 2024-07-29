@@ -45,9 +45,6 @@ namespace possum {
         ///Delete all associated tags
         void clear_tags();
 
-        ///getter for type
-        [[nodiscard]] ImageType getType() const;
-
         ///Constructing Image data structure. sha1sum needs to be calculated beforehand.
         Image(const std::string &path, std::string sha1Sum, ImageType type, time_t creation_time);
 

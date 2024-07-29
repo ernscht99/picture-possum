@@ -16,10 +16,6 @@ namespace possum {
         return sha1_sum;
     }
 
-    ImageType Image::getType() const {
-        return type;
-    }
-
     void Image::add_path(const std::filesystem::path &new_path) {
         pathes.emplace_back(new_path);
     }
@@ -49,7 +45,7 @@ namespace possum {
         return tag_ids;
     }
 
-    Image::Image() : pathes({""}), sha1_sum(""), type(ImageType::None), creation_time(0) {
+    Image::Image() : pathes({""}), type(ImageType::None), creation_time(0) {
     }
 
     QJsonObject Image::to_json() const {

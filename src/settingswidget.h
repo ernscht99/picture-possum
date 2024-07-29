@@ -35,9 +35,7 @@ public slots:
 
     void edit_tag();
 
-    void change_tag(const possum::Tag &tag);
-
-signals:
+    signals:
 
     void save_settings(const possum::Settings &);
 

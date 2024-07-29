@@ -54,6 +54,6 @@ namespace possum {
                 QStringList dateConversionFormats);
 
     };
-}
+} //namespace possum
 
 #endif //PICTURE_POSSUM_SETTINGS_H

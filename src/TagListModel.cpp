@@ -21,6 +21,7 @@ QVariant possum::TagListModel::data(const QModelIndex &index, int role) const {
             case 1:
                 return {QKeySequence{tags[index.row()].key_sequence}};
             case 2:
+            default:
                 return {QString::fromStdString(tags[index.row()].name)};
         }
     }
