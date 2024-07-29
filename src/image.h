@@ -1,7 +1,3 @@
-//
-// Created by felix on 2/19/23.
-//
-
 #ifndef PICTURE_POSSUM_IMAGE_H
 #define PICTURE_POSSUM_IMAGE_H
 
@@ -13,7 +9,6 @@
 #include <set>
 #include <QMetaType>
 #include <utility>
-#include <string>
 #include <chrono>
 #include <iomanip>
 #include "ImageTypes.h"

@@ -1,6 +1,5 @@
 #include "Settings.h"
 
-
 possum::Settings::Settings(const std::vector<Tag> &tag_vector, const std::set<possum::ImageType> &validTypes,
                            QStringList dateConversionFormats) : valid_types(validTypes), date_conversion_formats(std::move(dateConversionFormats)) {
     for (const Tag &t : tag_vector) {

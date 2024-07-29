@@ -1,9 +1,4 @@
-//
-// Created by felix on 2/19/23.
-//
-#include "image.h"
-
-
+#include "./image.h"
 
 namespace possum {
 
