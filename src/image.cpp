@@ -103,4 +103,4 @@ namespace possum {
                && creation_time == rhs.creation_time;
     }
 
-}
+} // namespace possum

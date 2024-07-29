@@ -89,6 +89,6 @@ namespace possum {
               const std::set<std::string> &tag_ids);
 
     };
-}
+} // namespace possum
 
 #endif //PICTURE_POSSUM_IMAGE_H

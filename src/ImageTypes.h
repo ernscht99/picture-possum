@@ -6,7 +6,7 @@
 #include <QString>
 ///File Types corresponding to file extensions, limited to supported types
 namespace possum {
-    enum ImageType : uint16_t {
+    enum ImageType : uint8_t {
         JPEG, PNG, BMP, Other, None
     };
 
