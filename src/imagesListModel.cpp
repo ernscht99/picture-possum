@@ -160,10 +160,10 @@ namespace possum{
         return {};
     }
 
-    int ImagesListModel::rowCount(const QModelIndex &parent) const {
+    int ImagesListModel::rowCount(const QModelIndex &) const {
         return static_cast<int>(hash_handles.size());
     }
-    int ImagesListModel::columnCount(const QModelIndex &parent) const {
+    int ImagesListModel::columnCount(const QModelIndex &) const {
         return 3;
     }
 
@@ -289,7 +289,7 @@ namespace possum{
 
 
     ImagesListModel::ImagesListModel(Settings settings, std::map<std::string, std::unique_ptr<Image>> images,
-                                     QObject *parent) : image_map(std::move(images)), settings(std::move(settings)), unsaved_changes(false){
+                                     QObject *) : image_map(std::move(images)), settings(std::move(settings)), unsaved_changes(false){
         for (const auto & [key, ignore] : image_map) {
             hash_handles.emplace_back(key);
         }

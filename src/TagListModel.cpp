@@ -6,7 +6,7 @@ possum::TagListModel::TagListModel(const std::map<std::string, Tag>& tag_map, QO
     }
 }
 
-int possum::TagListModel::rowCount(const QModelIndex &parent) const {
+int possum::TagListModel::rowCount(const QModelIndex &) const {
     return static_cast<int>(tags.size());
 }
 
@@ -44,11 +44,11 @@ QVariant possum::TagListModel::headerData(int section, Qt::Orientation orientati
 
 }
 
-int possum::TagListModel::columnCount(const QModelIndex &parent) const {
+int possum::TagListModel::columnCount(const QModelIndex &) const {
     return 3;
 }
 
-bool possum::TagListModel::removeRows(int row, int count, const QModelIndex &parent) {
+bool possum::TagListModel::removeRows(int row, int count, const QModelIndex &) {
     if(row+count-1< rowCount()) {
         tags.erase(tags.begin() + row, tags.begin() + row + count);
         layoutChanged();
