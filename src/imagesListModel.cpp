@@ -1,9 +1,16 @@
+#include "imagesListModel.h"
+#include "TinyEXIF.h"
+#include <QJsonObject>
+#include <QJsonDocument>
 #include <QMessageBox>
 #include <QProgressDialog>
-#include <thread>
-#include <mutex>
+#include <QFile>
+#include <QFont>
+#include <fstream>
 #include <iostream>
-#include "imagesListModel.h"
+#include <mutex>
+#include <thread>
+#include <utility>
 
 namespace {
     QString from_timestamp(time_t timestamp) {

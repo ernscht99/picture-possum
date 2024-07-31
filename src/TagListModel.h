@@ -1,9 +1,9 @@
 #ifndef PICTURE_POSSUM_TAGLISTMODEL_H
 #define PICTURE_POSSUM_TAGLISTMODEL_H
 
+#include <vector>
 #include <QAbstractTableModel>
 #include "Tag.h"
-#include <vector>
 
 namespace possum {
     class TagListModel : public QAbstractTableModel {

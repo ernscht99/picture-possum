@@ -1,4 +1,5 @@
 #include "KeyGenerator.h"
+
 #include <sstream>
 
 #if __has_include(<openssl/sha.h>)

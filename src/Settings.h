@@ -2,15 +2,12 @@
 #define PICTURE_POSSUM_SETTINGS_H
 
 #include <map>
-#include "Tag.h"
-#include "ImageTypes.h"
 #include <set>
 #include <QString>
-#include <QList>
 #include <QJsonObject>
-#include <utility>
-#include <QJsonArray>
-#include <QJsonValue>
+
+#include "Tag.h"
+#include "ImageTypes.h"
 
 namespace possum {
     ///Keys for json export

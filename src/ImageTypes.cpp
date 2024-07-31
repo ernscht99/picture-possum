@@ -1,5 +1,7 @@
 #include "ImageTypes.h"
 
+#include <regex>
+#include <QString>
 namespace possum {
     using namespace std;
 

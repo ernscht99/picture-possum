@@ -2,11 +2,9 @@
 #define PICTURE_POSSUM_IMAGETYPES_H
 
 #include <string>
-#include <regex>
-#include <QString>
 ///File Types corresponding to file extensions, limited to supported types
 namespace possum {
-    enum ImageType : uint8_t {
+    enum ImageType {
         JPEG, PNG, BMP, Other, None
     };
 

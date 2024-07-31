@@ -1,5 +1,8 @@
 #include "./image.h"
 
+#include <fstream>
+#include <regex>
+
 namespace possum {
 
     Image::Image(const std::string &path, std::string sha1Sum, ImageType type, time_t creation_time) :

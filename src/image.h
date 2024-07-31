@@ -2,18 +2,13 @@
 #define PICTURE_POSSUM_IMAGE_H
 
 #include <string>
-#include <fstream>
 #include <vector>
 #include <filesystem>
-#include <regex>
 #include <set>
 #include <QMetaType>
-#include <utility>
-#include <chrono>
-#include <iomanip>
-#include "ImageTypes.h"
-#include "Tag.h"
 #include <QJsonArray>
+#include "Tag.h"
+#include "ImageTypes.h"
 
 namespace possum {
     ///Keys for exporting to json

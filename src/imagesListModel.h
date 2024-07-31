@@ -1,16 +1,11 @@
 #ifndef PICTURE_POSSUM_IMAGESLISTMODEL_H
 #define PICTURE_POSSUM_IMAGESLISTMODEL_H
 
-#include <QAbstractItemModel>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include "TinyEXIF.h"
-#include "image.h"
-#include "Settings.h"
 #include <ctime>
 #include <filesystem>
-#include <QFile>
-#include <QFont>
+#include <QAbstractItemModel>
+#include "image.h"
+#include "Settings.h"
 #include "KeyGenerator.h"
 
 ///How many threads are used when processing images for duplicate detection

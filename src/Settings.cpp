@@ -1,5 +1,9 @@
 #include "Settings.h"
 
+#include <utility>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QList>
 namespace possum {
     Settings::Settings(const std::vector<Tag>& tag_vector, const std::set<possum::ImageType>& validTypes,
                        QStringList dateConversionFormats) : valid_types(validTypes), date_conversion_formats(std::move(dateConversionFormats)) {

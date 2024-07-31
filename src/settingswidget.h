@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QAbstractButton>
 #include <QDialogButtonBox>
-#include "Settings.h"
 #include <QStringListModel>
 #include <QButtonGroup>
+#include "Settings.h"
 #include "TagListModel.h"
 #include "tagdialog.h"
 

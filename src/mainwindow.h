@@ -2,8 +2,6 @@
 #define MAINWINDOW_H
 
 #include <iostream>
-#include "imagesListModel.h"
-#include "ImageTypes.h"
 #include <QMainWindow>
 #include <QProgressDialog>
 #include <QKeyEvent>
@@ -12,6 +10,9 @@
 #include <QMessageBox>
 #include <QGraphicsScene>
 #include <QShortcut>
+
+#include "imagesListModel.h"
+#include "ImageTypes.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
