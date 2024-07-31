@@ -17,7 +17,7 @@ Features:
 - cmake 3.28.3
 - g++13
 - OpenSSL 3.0.13 (optional)
-- GTest 1.14.0
+- GTest 1.14.0 (optional)
 - Qt 6.4.2
 
 ### Ubuntu 24
