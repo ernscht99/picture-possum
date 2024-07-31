@@ -183,10 +183,10 @@ namespace possum {
 
 
     void ImagesListModel::insert_image(const Image &inserting_image) {
-        auto image_iter(image_map.find(inserting_image.getSha1Sum()));
+        auto image_iter(image_map.find(inserting_image.getSimilarityKey()));
         if (image_iter == image_map.end()) {
-            image_map.insert({inserting_image.getSha1Sum(), std::make_unique<Image>(inserting_image)});
-            hash_handles.emplace_back(inserting_image.getSha1Sum());
+            image_map.insert({inserting_image.getSimilarityKey(), std::make_unique<Image>(inserting_image)});
+            hash_handles.emplace_back(inserting_image.getSimilarityKey());
         } else {
             Image *existing_image = image_iter->second.get();
             existing_image->add_path(inserting_image.getPath());
@@ -259,7 +259,7 @@ namespace possum {
     }
 
     void ImagesListModel::update_image(const Image &updater) {
-        auto to_be_updated = image_map.find(updater.getSha1Sum());
+        auto to_be_updated = image_map.find(updater.getSimilarityKey());
         if (to_be_updated == image_map.end())
             return;
 
@@ -290,7 +290,7 @@ namespace possum {
         std::map<std::string, std::unique_ptr<Image>> image_map;
         for (auto const &image_json: json[IMAGE_LIST_KEY].toArray()) {
             Image image = Image::from_json(image_json.toObject());
-            image_map.insert({image.getSha1Sum(), make_unique<Image>(image)});
+            image_map.insert({image.getSimilarityKey(), make_unique<Image>(image)});
         }
         return ImagesListModel{
                 Settings::from_json(json[SETTINGS_KEY].toObject()),

@@ -25,8 +25,8 @@ namespace possum {
         ///Getter for path
         [[nodiscard]] const std::filesystem::path &getPath() const;
 
-        ///Getter for sha1sum
-        [[nodiscard]] const std::string &getSha1Sum() const;
+        ///Getter for simialrity_key
+        [[nodiscard]] const std::string & getSimilarityKey() const;
 
         ///Get the first filename
         [[nodiscard]] std::string getFilename() const;
@@ -67,8 +67,8 @@ namespace possum {
         ///path of the image in the file system
         std::vector<std::filesystem::path> pathes;
 
-        ///sha1 hash of the image contents
-        std::string sha1_sum;
+        ///key for detecting other images that are similar
+        std::string similarity_key;
 
         ///associated tags
         std::set<std::string> tag_ids;

@@ -6,7 +6,7 @@
 namespace possum {
 
     Image::Image(const std::string &path, std::string sha1Sum, ImageType type, time_t creation_time) :
-            sha1_sum(std::move(sha1Sum)), type(type), creation_time(creation_time) {
+            similarity_key(std::move(sha1Sum)), type(type), creation_time(creation_time) {
         pathes.emplace_back(path);
     }
 
@@ -15,8 +15,8 @@ namespace possum {
     }
 
 
-    const std::string &Image::getSha1Sum() const {
-        return sha1_sum;
+    const std::string &Image::getSimilarityKey() const {
+        return similarity_key;
     }
 
     void Image::add_path(const std::filesystem::path &new_path) {
@@ -61,7 +61,7 @@ namespace possum {
         for (const auto &tag_id: tag_ids) {
             tags_arr.push_back(QString::fromStdString(tag_id));
         }
-        root[IMAGE_CHECKSUM_KEY] = QString::fromStdString(sha1_sum);
+        root[IMAGE_CHECKSUM_KEY] = QString::fromStdString(similarity_key);
         root[IMAGE_PATHES_KEY] = pathes_arr;
         root[IMAGE_TAGS_KEY] = tags_arr;
         root[IMAGE_CREATION_KEY] = QJsonValue{static_cast<int>(creation_time)};
@@ -92,8 +92,7 @@ namespace possum {
                  std::string sha1Sum,
                  ImageType type,
                  time_t creation_time,
-                 const std::set<std::string> &tag_ids) :
-            sha1_sum(std::move(sha1Sum)), tag_ids(tag_ids), type(type), creation_time(creation_time) {
+                 const std::set<std::string> &tag_ids) : similarity_key(std::move(sha1Sum)), tag_ids(tag_ids), type(type), creation_time(creation_time) {
         for (auto const &path_string: pathes) {
             this->pathes.emplace_back(path_string);
         }
@@ -102,7 +101,7 @@ namespace possum {
     bool Image::operator==(const Image &rhs) const {
         //not comparing pathes because they cannot change in the model anyway
 
-        return tag_ids == rhs.tag_ids && sha1_sum == rhs.sha1_sum && type == rhs.type
+        return tag_ids == rhs.tag_ids && similarity_key == rhs.similarity_key && type == rhs.type
                && creation_time == rhs.creation_time;
     }
 
