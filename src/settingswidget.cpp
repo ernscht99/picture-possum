@@ -86,6 +86,6 @@ void SettingsWidget::delete_tag() {
     }
 }
 
-void SettingsWidget::change_tag(const possum::Tag& itag) {
+void SettingsWidget::change_tag(const possum::Tag& tag) {
     tags.update_tag(tag);
 }
