@@ -26,6 +26,8 @@ namespace possum {
 
         bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
+        void update_tag(const Tag & tag);
+
         ///Getter get the Tag at index
         [[nodiscard]] const Tag &getTag(const QModelIndex &index) const;
 

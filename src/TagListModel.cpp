@@ -1,17 +1,17 @@
 #include "TagListModel.h"
 
-possum::TagListModel::TagListModel(const std::map<std::string, Tag> &tag_map, QObject *parent) : QAbstractTableModel(
-        parent) {
-    for (const auto &kv: tag_map) {
+possum::TagListModel::TagListModel(const std::map<std::string, Tag>& tag_map, QObject* parent) : QAbstractTableModel(
+                                                                                                     parent) {
+    for (const auto& kv : tag_map) {
         tags.emplace_back(kv.second);
     }
 }
 
-int possum::TagListModel::rowCount(const QModelIndex &) const {
+int possum::TagListModel::rowCount(const QModelIndex&) const {
     return static_cast<int>(tags.size());
 }
 
-QVariant possum::TagListModel::data(const QModelIndex &index, int role) const {
+QVariant possum::TagListModel::data(const QModelIndex& index, int role) const {
     if (!index.isValid())
         return {};
     if (role == Qt::DisplayRole) {
@@ -43,14 +43,13 @@ QVariant possum::TagListModel::headerData(int section, Qt::Orientation orientati
                 return {};
         }
     return {};
-
 }
 
-int possum::TagListModel::columnCount(const QModelIndex &) const {
+int possum::TagListModel::columnCount(const QModelIndex&) const {
     return 3;
 }
 
-bool possum::TagListModel::removeRows(int row, int count, const QModelIndex &) {
+bool possum::TagListModel::removeRows(int row, int count, const QModelIndex&) {
     if (row + count - 1 < rowCount()) {
         tags.erase(tags.begin() + row, tags.begin() + row + count);
         layoutChanged();
@@ -59,10 +58,24 @@ bool possum::TagListModel::removeRows(int row, int count, const QModelIndex &) {
     return false;
 }
 
-const possum::Tag &possum::TagListModel::getTag(const QModelIndex &index) const {
+const possum::Tag& possum::TagListModel::getTag(const QModelIndex& index) const {
     return tags[index.row()];
 }
 
-const std::vector<possum::Tag> &possum::TagListModel::getTags() {
+const std::vector<possum::Tag>& possum::TagListModel::getTags() {
     return tags;
+}
+
+void possum::TagListModel::update_tag(const Tag& new_tag) {
+    for (auto& tag : tags) {
+        if (tag.getIdentifier() == new_tag.getIdentifier()) {
+            tag.key_sequence = new_tag.key_sequence;
+            tag.name = new_tag.name;
+            tag.emoji = new_tag.emoji;
+            layoutChanged();
+            return;
+        }
+    }
+    tags.emplace_back(new_tag);
+    layoutChanged();
 }
